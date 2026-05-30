@@ -413,48 +413,52 @@ body {
     letter-spacing: 1px;
 }
 
-/* ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ ПОДВАЛА САЙТА */
-.footer {
+/* СТИЛИ ДЛЯ НОВОГО КРУПНОГО ПОДВАЛА */
+.footer-hero {
     width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-    background: rgba(6, 6, 8, 0.4);
-    backdrop-filter: blur(10px);
-    margin-top: 120px; /* Сделали отступ побольше */
-    padding: 30px 0;
-}
-
-.footer-content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
+    margin-top: 140px; /* Большой отступ от карточек планов, чтобы блок дышал */
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
+    text-align: center;
+    padding-bottom: 40px;
 }
 
-.footer-copy {
-    color: #52525b; /* Красивый темно-серый цвет */
-    font-size: 10px; /* Сразу уменьшили размер без использования опасного scale */
-    letter-spacing: 0.5px;
-}
-
-.footer-socials {
-    display: flex; /* Выстраиваем ссылки в ровную строку */
-    gap: 25px; /* Задаем жесткий красивый отступ между кнопками */
-}
-
-.footer-socials a {
-    color: #a1a1aa !important; /* Принудительно красим в светло-серый */
-    text-decoration: none !important; /* Намертво убираем синее подчеркивание браузера */
-    font-size: 10px; /* Уменьшенный размер под 75% масштаб */
-    font-weight: 700;
+/* ОГРОМНЫЙ ЗАГОВОЛОК ШРИФТОМ GORETAX */
+.footer-hero-title {
+    font-family: 'Goretax', sans-serif !important;
+    font-size: 38px; /* Делаем заголовок массивным, как на референсе */
+    font-weight: normal;
+    color: #ffffff;
+    margin-bottom: 25px;
     letter-spacing: 1px;
-    transition: color 0.2s, text-shadow 0.2s;
 }
 
-/* Эффект неонового подсвечивания ссылок при наведении */
-.footer-socials a:hover {
-    color: #a855f7 !important; /* Наш фиолетовый неон */
-    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+/* БЛОК ОПИСАНИЯ ПО ЦЕНТРУ */
+.footer-hero-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #a1a1aa;
+    font-size: 11px; /* Мелкий аккуратный шрифт, как на скрине */
+    line-height: 1.8;
+    max-width: 500px; /* Сжимаем текст по ширине, чтобы он встал в красивые короткие строки */
+    margin-bottom: 80px; /* Отступ до самой нижней строчки */
+}
+
+.footer-hero-desc p {
+    margin-bottom: 10px;
+}
+
+/* САМАЯ НИЖНЯЯ ТЕМНАЯ СТРОЧКА */
+.footer-sub-bar {
+    width: 100%;
+    max-width: 900px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03); /* Очень тонкая линия над ней */
+    padding-top: 20px;
+}
+
+.footer-sub-bar span {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #52525b; /* Тусклый серый цвет */
+    font-size: 10px;
+    letter-spacing: 2px;
 }

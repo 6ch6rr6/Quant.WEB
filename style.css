@@ -26,34 +26,6 @@ body {
 body::-webkit-scrollbar { display: none; }
 body { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ЭФФЕКТ ПЕСКА И СЕТКИ НА ФОНЕ */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-    background-size: 50px 50px;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.025; /* Эффект песка */
-    pointer-events: none;
-}
-
 /* ОБНУЛЕНИЕ */
 * {
     margin: 0;
@@ -142,7 +114,7 @@ html {
     transform-origin: top center; /* Сжатие идет строго от верхнего центра */
 }
 
-/* КАРТОЧКИ И СВЕЧЕНИЕ */
+/* ЭФФЕКТ КАРТОЧЕК (Исправляем дребезжание текста) */
 .profile-card, .skills-card, .project-showcase {
     background: rgba(15, 15, 20, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -152,6 +124,11 @@ html {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     margin-bottom: 25px;
     transition: all 0.3s ease;
+
+    /* 👇 ДОБАВЛЯЕМ ЭТИ ТРИ СТРОЧКИ ДЛЯ СТАБИЛИЗАЦИИ ТЕКСТА */
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased; /* Принудительное сглаживание текста */
+    transform: translateZ(0); /* Аппаратное ускорение (включает видеокарту на полную) */
 }
 
 .profile-card:hover, .skills-card:hover, .project-showcase:hover {
@@ -526,4 +503,30 @@ body {
 }
 .music-btn.playing {
     border-color: rgba(168, 85, 247, 0.2);
+}
+
+/* НАСТРОЙКИ ДЛЯ ХОЛСТА ПЕСЧАНОГО ВЕТРА */
+#sand-wind {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Уводит ветер под карточки и текст */
+    pointer-events: none; /* Пропускает клики мышки сквозь анимацию */
+}
+
+/* Возвращаем чистую фоновую сетку прямо в body */
+body {
+    background-color: #08080a;
+    color: #e4e4e7;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    position: relative;
+    
+    /* Сетка */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+    background-size: 50px 50px;
 }

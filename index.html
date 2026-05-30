@@ -230,5 +230,70 @@
         });
     </script>
     
+        <!-- Холст для анимации песчаного ветра -->
+    <canvas id="sand-wind"></canvas>
+
+    <script>
+        const canvas = document.getElementById('sand-wind');
+        const ctx = canvas.getContext('2d');
+
+        // Подстраиваем холст под размеры экрана
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Настройки песчаного ветра
+        const grains = [];
+        const maxGrains = 100; // Количество песчинок на экране
+
+        class Grain {
+            constructor() {
+                this.reset(true);
+            }
+            reset(init = false) {
+                // Если это старт, раскидываем по экрану, если ресет — пускаем строго слева или сверху
+                this.x = init ? Math.random() * canvas.width : -10;
+                this.y = init ? Math.random() * canvas.height : Math.random() * canvas.height - 50;
+                
+                this.size = Math.random() * 1.5 + 0.5; // Размер песчинки (мелкие)
+                this.speedX = Math.random() * 2 + 1.5; // Скорость ветра по горизонтали (летят вправо)
+                this.speedY = Math.random() * 0.5 + 0.2; // Наклон ветра (слегка падают вниз)
+                this.alpha = Math.random() * 0.4 + 0.1; // Прозрачность, чтобы был эффект глубины
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Если песчинка улетела за экран — создаем новую
+                if (this.x > canvas.width || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`; // Фиолетовый неоновый ветер под стиль студии
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        // Заполняем массив
+        for (let i = 0; i < maxGrains; i++) {
+            grains.push(new Grain());
+        }
+
+        // Цикл анимации
+        function animateSand() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            grains.forEach(g => {
+                g.update();
+                g.draw();
+            });
+            requestAnimationFrame(animateSand);
+        }
+        animateSand();
+    </script>
+
 </body>
 </html>

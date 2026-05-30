@@ -490,3 +490,44 @@ body {
     font-size: 10px;
     letter-spacing: 2px;
 }
+
+/* КНОПКА МУЗЫКИ В УГЛУ ЭКРАНА */
+.music-toggle-container {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 999; /* Кнопка всегда будет поверх всего сайта */
+}
+
+.music-btn {
+    background: rgba(18, 18, 22, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+}
+
+.music-btn:hover {
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+}
+
+.music-text {
+    color: #a1a1aa;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Когда музыка играет, кнопка слегка светится фиолетовым */
+.music-btn.playing .music-text {
+    color: #ffffff;
+}
+.music-btn.playing {
+    border-color: rgba(168, 85, 247, 0.2);
+}

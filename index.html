@@ -201,6 +201,33 @@
             }, 10);
         });
     </script>
+    
+    <!-- Скрипт управления музыкой -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = musicBtn.querySelector('.music-icon');
+        const musicText = musicBtn.querySelector('.music-text');
 
+        // Громкость музыки (0.3 — это 30% громкости, чтобы не била по ушам)
+        music.volume = 0.3; 
+
+        musicBtn.addEventListener('click', () => {
+            if (music.paused) {
+                // Включаем музыку
+                music.play();
+                musicIcon.textContent = '🔊';
+                musicText.textContent = 'SOUND ON';
+                musicBtn.classList.add('playing');
+            } else {
+                // Выключаем музыку
+                music.pause();
+                musicIcon.textContent = '🔇';
+                musicText.textContent = 'SOUND OFF';
+                musicBtn.classList.remove('playing');
+            }
+        });
+    </script>
+    
 </body>
 </html>

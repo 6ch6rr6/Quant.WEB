@@ -160,6 +160,13 @@
                         <p>Паркур игра вдохновленная Mirrors Edge</p>
                     </div>
                 </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-status concept">Концепт</div>
+                    <div class="roadmap-content">
+                        <h4>Project "Y"</h4>
+                        <p>Кооперативный хоррор от первого лица с упором на сюжет и физические головоломки.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -266,8 +273,14 @@
                 }
             }
             draw() {
-                ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`; // Фиолетовый неоновый ветер под стиль студии
+                // 🌟 Скрипт сам заглядывает в style.css и забирает оттуда твой малиново-красный цвет
+                const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+    
+                // Окрашиваем песчинку и применяем к ней индивидуальную прозрачность для эффекта глубины
+                ctx.fillStyle = accentColor; 
+                ctx.globalAlpha = this.alpha;
                 ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.globalAlpha = 1; // Сбрасываем прозрачность для остального контента
             }
         }
 

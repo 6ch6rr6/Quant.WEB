@@ -2,14 +2,14 @@
    GLOBAL THEME VARIABLES (АКЦЕНТНЫЙ ЦВЕТ ТУТ)
    ======================================================== */
 :root {
-    /* ПРОСТО МЕНЯЙ ЭТОТ ЦВЕТ, ЧТОБЫ ПЕРЕКРАСИТЬ ВЕСЬ САЙТ */
-    --accent-color: #f7ab55; 
+    /* Основной насыщенный малиново-красный неон */
+    --accent-color: #e11d48; 
     
-    /* Автоматические оттенки для свечений и баджей */
-    --accent-glow: rgba(168, 85, 247, 0.08);
-    --accent-hover-border: rgba(168, 85, 247, 0.25);
-    --accent-badge-bg: rgba(168, 85, 247, 0.1);
-    --accent-badge-border: rgba(168, 85, 247, 0.2);
+    /* Автоматические оттенки для свечений, баджей и ховеров */
+    --accent-glow: rgba(225, 29, 72, 0.08);
+    --accent-hover-border: rgba(225, 29, 72, 0.3);
+    --accent-badge-bg: rgba(225, 29, 72, 0.1);
+    --accent-badge-border: rgba(225, 29, 72, 0.2);
 }
 
 /* 1. РЕГИСТРИРУЕМ ШРИФТЫ */
@@ -29,11 +29,18 @@
 
 /* 2. НАСТРОЙКИ ФОНА, СЕТКИ И ПЕСКА */
 body {
-    background-color: #08080a;
+    background-color: #08080a !important; /* Принудительно задаем глубокий темный цвет */
     color: #e4e4e7;
     min-height: 100vh;
     padding-bottom: 80px;
     position: relative;
+    
+    /* 👇 ВОЗВРАЩАЕМ И ФИКСИРУЕМ СЕТКУ С ПОМОЩЬЮ !IMPORTANT */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+    background-size: 50px 50px !important;
+    background-attachment: fixed !important; /* Чтобы сетка красиво стояла на месте при скролле */
 }
 
 /* СКРЫВАЕМ СКРОЛЛБАРЫ */

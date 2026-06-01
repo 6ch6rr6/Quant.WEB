@@ -144,7 +144,8 @@ html {
     margin-bottom: 25px;
     
     /* Делаем анимацию возврата карточки невероятно плавной */
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.15s ease-out;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+
     
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;

@@ -301,30 +301,32 @@
         animateSand();
     </script>
 
-    <!-- Скрипт интерактивного 3D-эффекта наклона карточек -->
+    <!-- ОБНОВЛЕННЫЙ СТАТИЧНЫЙ 3D-НАКЛОН КАРТОЧЕК БЕЗ ДРЕБЕЗЖАНИЯ -->
     <script>
-        // Находим все карточки, кроме плеера и подвала
         const tiltCards = document.querySelectorAll('.profile-card, .skills-card');
 
         tiltCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 
+                // Учитываем наш масштаб сайта 0.70 для идеальной точности мышки
+                const scaleModifier = 0.70; 
+                
                 // Вычисляем координаты курсора относительно центра карточки
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
+                const x = (e.clientX - rect.left) - rect.width / 2;
+                const y = (e.clientY - rect.top) - rect.height / 2;
 
-                // Настройки силы наклона (чем больше число, тем сильнее наклон)
-                const tiltX = (y / (rect.height / 2)) * -10; // Наклон по вертикали
-                const tiltY = (x / (rect.width / 2)) * 10;   // Наклон по горизонтали
+                // 🌟 Сделали наклон в два раза слабее (уменьшили коэффициент до 4)
+                const tiltX = (y / (rect.height / 2)) * -4; 
+                const tiltY = (x / (rect.width / 2)) * 4;   
 
-                // Применяем 3D-трансформацию
-                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+                // Применяем мягкую трансформацию. Убрали scale3d, чтобы края не дергались
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             });
 
-            // Когда мышка уходит с карточки, плавно возвращаем её в исходное ровное положение
+            // Мягкий возврат в исходную позицию
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
             });
         });
     </script>

@@ -301,5 +301,33 @@
         animateSand();
     </script>
 
+    <!-- Скрипт интерактивного 3D-эффекта наклона карточек -->
+    <script>
+        // Находим все карточки, кроме плеера и подвала
+        const tiltCards = document.querySelectorAll('.profile-card, .skills-card');
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                
+                // Вычисляем координаты курсора относительно центра карточки
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                // Настройки силы наклона (чем больше число, тем сильнее наклон)
+                const tiltX = (y / (rect.height / 2)) * -10; // Наклон по вертикали
+                const tiltY = (x / (rect.width / 2)) * 10;   // Наклон по горизонтали
+
+                // Применяем 3D-трансформацию
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            // Когда мышка уходит с карточки, плавно возвращаем её в исходное ровное положение
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+    
 </body>
 </html>

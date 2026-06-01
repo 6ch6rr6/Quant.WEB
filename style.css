@@ -133,7 +133,7 @@ html {
     transform-origin: top center;
 }
 
-/* ЭФФЕКТ КАРТОЧЕК (Исправляем дребезжание текста) */
+/* ЭФФЕКТ КАРТОЧЕК С ПОДДЕРЖКОЙ ИНТЕРАКТИВНОГО 3D */
 .profile-card, .skills-card, .project-showcase {
     background: rgba(15, 15, 20, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.04);
@@ -142,11 +142,18 @@ html {
     padding: 35px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     margin-bottom: 25px;
-    transition: all 0.3s ease;
+    
+    /* Делаем анимацию возврата карточки невероятно плавной */
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.15s ease-out;
+    
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
-    transform: translateZ(0);
+    
+    /* Включаем режим 3D для вложенных элементов */
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
 }
+
 
 .profile-card:hover, .skills-card:hover, .project-showcase:hover {
     border-color: var(--accent-hover-border);

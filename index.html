@@ -7,18 +7,19 @@
     <link rel="icon" type="image/png" href="images/logo.png">
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <!-- Аудиоплеер для фоновой музыки -->
+
+    <!-- Аудиоплеер для фоновой музыки -->
     <audio id="bg-music" src="images/music.mp3" loop></audio>
 
     <!-- Переключатель звука в левом верхнем углу -->
     <div class="music-toggle-container">
         <button id="music-btn" class="music-btn">
             <span class="music-icon">🔇</span>
-            <span class="music-text">SOUND OFF</span>
+            <span class="music-text" data-en="SOUND OFF">SOUND OFF</span>
         </button>
     </div>
 
@@ -26,16 +27,19 @@
     <header class="navbar">
         <div class="logo">QUANT-STUDIO</div>
         <nav class="nav-links">
-            <a href="#about">О нас</a>
-            <a href="#projects">Наш проект</a>
-            <a href="#hiring">Вакансии</a>
-            <a href="#roadmap">Планы</a>
+            <a href="#about" data-en="About us">О нас</a>
+            <a href="#projects" data-en="Our project">Наш проект</a>
+            <a href="#hiring" data-en="Hiring">Вакансии</a>
+            <a href="#roadmap" data-en="Roadmap">Планы</a>
+            
+            <!-- Кнопка переключения языка -->
+            <button id="lang-toggle-btn" class="lang-btn" style="background: none; border: 1px solid var(--accent-color); color: #fff; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-family: inherit; font-size: 12px; margin-left: 10px;">EN</button>
         </nav>
     </header>
 
     <!-- Главный контейнер -->
     <main class="container">
-        
+
         <!-- САМЫЙ ПЕРВЫЙ БЛОК: БИО СТУДИИ (QUANT-STUDIO) -->
         <section id="about" class="profile-card">
             <div class="profile-header">
@@ -43,171 +47,171 @@
                     <!-- Указываем путь к вашей картинке внутри папки images -->
                     <img src="images/logo.png" alt="QUANT-STUDIO Logo" class="avatar">
                 </div>
+                
                 <div class="profile-title">
                     <span class="subtitle">ROBLOX DEVELOPMENT STUDIO</span>
                     <h1>QUANT-STUDIO</h1>
+                    
                     <div class="tags">
-                        <span class="tag">Создано в 2024</span>
-                        <span class="tag">ХХ+ участников</span>
-                        <span class="tag">ХХ млн+ визитов</span>
+                        <span class="tag" data-en="Created in 2024">Создано в 2024</span>
+                        <span class="tag" data-en="XX+ members">XX+ участников</span>
+                        <span class="tag" data-en="XXM+ visits">XX млн+ визитов</span>
                     </div>
                 </div>
+                
                 <div class="status-badge">● IN DEVELOPMENT</div>
             </div>
 
-            <p class="bio">
-                Мы — независимая команда разработчиков в Roblox. Создаем уникальные миры, 
-                фокусируясь на качественном коде, проработанном геймдизайне и захватывающей атмосфере. 
-                Наша главная цель — делать игры, в которые хочется возвращаться.
+            <p class="bio" 
+               data-en="We are an independent team of developers in Roblox. We create unique worlds, focusing on high-quality code, well-thought-out game design, and an immersive atmosphere. Our main goal is to make games that you want to return to.">
+                Мы — независимая команда разработчиков в Roblox. Создаем уникальные миры, фокусируясь на качественном коде, проработанном геймдизайне и захватывающей атмосфере. Наша главная цель — делать игры, в которые хочется возвращаться.
             </p>
         </section>
 
         
-         <!-- РАЗДЕЛ 01: НАШ ГЛАВНЫЙ ПРОЕКТ -->
+        <!-- РАЗДЕЛ 01: НАШ ГЛАВНЫЙ ПРОЕКТ -->
         <div class="section-header">
             <span class="section-number">01</span>
-            <h2 class="section-title">Наш главный проект</h2>
+            <h2 class="section-title" data-en="Our main project">Наш главный проект</h2>
             <div class="section-line"></div>
         </div>
 
         <!-- Описание игры (теперь свободно лежит на сайте) -->
         <div class="project-info" style="margin-bottom: 25px;">
             <h3 style="font-size: 24px; color: #ffffff; margin-bottom: 6px;">BLACKOUT</h3>
-            <p style="color: #a1a1aa; font-size: 15px;">Опэн ворлд экшн с элементами хоррора.</p>
+            <p data-en="open world action with horror elements." style="color: #a1a1aa; font-size: 15px;">опэн ворлд экшн с элементами хоррора.</p>
         </div>
-        
+
         <!-- БОЛЬШОЙ УВЕЛИЧЕННЫЙ ВИДЕОПЛЕЕР -->
         <div class="video-container">
             <video src="images/trailer.mp4" autoplay loop muted controls></video>
         </div>
 
-<!-- Карточка «Вдохновение и Атмосфера» с неоновыми заголовками -->
-<div style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="skills-card basic-card">
-        
-        <!-- Заголовок с акцентным цветом -->
-        <h3 style="color: var(--accent-color); margin-bottom: 15px;">МЫ ВДОХНОВЛЯЕМСЯ ТАКИМИ ПРОЕКТАМИ, КАК:</h3>
-        
-        <!-- Контейнер с логотипами -->
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 35px; margin-top: 25px; margin-bottom: 30px; padding: 0 15px;">
-            <img src="images/cyberpunk.png" alt="Cyberpunk 2077" style="width: 142px; height: 35px; object-fit: contain;">
-            <img src="images/subnautica2.png" alt="Subnautica 2" style="width: 209px; height: 18px; object-fit: contain;">
-            <img src="images/mec.png" alt="Mirror's Edge Catalyst" style="width: 126px; height: 35px; object-fit: contain;">
-            <img src="images/madcity.png" alt="Mad City" style="width: 116px; height: 40px; object-fit: contain;">
-            <img src="images/bladerunner.png" alt="Blade Runner 2049" style="width: 38px; height: 38px; object-fit: contain;">
-            <img src="images/dune.png" alt="DUNE" style="width: 142px; height: 55px; object-fit: contain; filter: brightness(1.4) contrast(1.2);">
+        <!-- Карточка «Вдохновение и Атмосфера» с неоновыми заголовками -->
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <div class="skills-card basic-card">
+                
+                <!-- Заголовок с акцентным цветом -->
+                <h3 data-en="WE ARE INSPIRED BY SUCH PROJECTS AS:" style="color: var(--accent-color); margin-bottom: 15px;">МЫ ВДОХНОВЛЯЕМСЯ ТАКИМИ ПРОЕКТАМИ, КАК:</h3>
+                
+                <!-- Контейнер с логотипами (остается без изменений, так как логотипы универсальны) -->
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 35px; margin-top: 25px; margin-bottom: 30px; padding: 0 15px;">
+                    <img src="images/cyberpunk.png" alt="Cyberpunk 2077" style="width: 142px; height: 35px; object-fit: contain;">
+                    <img src="images/subnautica2.png" alt="Subnautica 2" style="width: 209px; height: 18px; object-fit: contain;">
+                    <img src="images/mec.png" alt="Mirror's Edge Catalyst" style="width: 126px; height: 35px; object-fit: contain;">
+                    <img src="images/madcity.png" alt="Mad City" style="width: 116px; height: 40px; object-fit: contain;">
+                    <img src="images/bladerunner.png" alt="Blade Runner 2049" style="width: 38px; height: 38px; object-fit: contain;">
+                    <img src="images/dune.png" alt="DUNE" style="width: 142px; height: 55px; object-fit: contain; filter: brightness(1.4) contrast(1.2);">
+                </div>
+                
+                <!-- Заголовок с акцентным цветом -->
+                <h3 data-en="ATMOSPHERE" style="color: var(--accent-color); margin-top: 25px;">АТМОСФЕРА</h3>
+                
+                <ul>
+                    <li data-en="The game has two different atmospheres that appear at different game times.">В игре есть две разные атмосферы, которые сменяют друг друга в зависимости от игрового времени.</li>
+                    <li data-en="The main aspects of the gameplay mechanics in our game are playing with lighting and global blackouts [It affects different locations differently].">Главные аспекты геймплейных механик — это игра со светом и глобальные отключения электричества (блэкауты) [Это влияет на разные локации по-разному].</li>
+                </ul>
+            </div>
         </div>
-        
-        <!-- Заголовок с акцентным цветом -->
-        <h3 style="color: var(--accent-color); margin-top: 25px;">АТМОСФЕРА</h3>
-        
-        <ul>
-            <li>В игре есть две разные атмосферы, которые сменяют друг друга в зависимости от игрового времени.</li>
-            <li>Главные аспекты геймплейных механик — это игра со светом и глобальные отключения электричества (блэкауты) [Это влияет на разные локации по-разному].</li>
-        </ul>
-    </div>
-</div>
-
-
         
         <!-- Две мелкие карточки под видео -->
         <div class="skills-grid">
+            
             <!-- Левая карточка: Плюсы игры -->
             <div class="skills-card can-do">
-                <h3>ПРЕИМУЩЕСТВА И ПЛЮСЫ ИГРЫ</h3>
+                <h3 data-en="ADVANTAGES AND PROS OF THE GAME">ПРЕИМУЩЕСТВА И ПЛЮСЫ ИГРЫ</h3>
                 <ul>
-                    <li><strong>01</strong> Мы используем самые продвинутые механики движка роблокса и лучших кодеров, оптимизация в игре будет на высшем уровне. </li>
-                    <li><strong>02</strong> Уникальный контент который никто еще не пробовал создавать в Roblox. </li>
-                    <li><strong>03</strong> Максимальная отзывчивость к игроку по ходу всего геймплея, чтобы даже дети могли это попробовать. </li>
-                    <li><strong>04</strong> В игре нет P2W, сбалансированная и в меру занимающая время прогрессия. </li>
+                    <li data-en=" We use the most advanced mechanics of the Roblox engine and the best coders, optimization in the game will be at the highest level."><strong>01</strong> Мы используем самые продвинутые механики движка роблокса и лучших кодеров, оптимизация в игре будет на высшем уровне.</li>
+                    <li data-en=" Unique content that no one else has tried to create in Roblox."><strong>02</strong> Уникальный контент который никто еще не пробовал создавать в Roblox.</li>
+                    <li data-en=" Maximum responsiveness to the player throughout the gameplay, so that even children can try it."><strong>03</strong> Максимальная отзывчивость к игроку по ходу всего геймплея, чтобы даже дети могли это попробовать.</li>
+                    <li data-en=" No P2W in the game, balanced and moderately engaging progression."><strong>04</strong> В игре нет P2W, сбалансированная и в меру занимающая время прогрессия.</li>
                 </ul>
             </div>
 
             <!-- Правая карточка: Что ждет в игре -->
             <div class="skills-card basic-card">
-                <h3>ЧТО ЖДЕТ В ИГРЕ</h3>
+                <h3 data-en="WHAT AWAITS IN THE GAME">ЧТО ЖДЕТ В ИГРЕ</h3>
                 <ul>
-                    <li><strong>01</strong> Первый в своем роде проект который будет иметь полноценный озвученый сюжет в Roblox на нескольких языках. </li>
-                    <li><strong>02</strong> Один из самых больших игровых миров в Roblox сравнимо с Deepwoken. </li>
-                    <li><strong>03</strong> Полная поддержка игры как от первого лица так и от третьего лица для игроков с VR, Xbox Gamepad, PC.(телефоны может быть) </li>
-                    <li><strong>04</strong> Самый лучший саунд и левел дизайн в Roblox, для достижения самой не забываемой атмосферы в игре. </li>
+                    <li data-en=" First of its kind project that will have a fully voiced storyline in Roblox in several languages."><strong>01</strong> Первый в своем роде проект который будет иметь полноценный озвученый сюжет в Roblox на нескольких языках.</li>
+                    <li data-en=" One of the largest game worlds in Roblox comparable to Deepwoken."><strong>02</strong> Один из самых больших игровых миров в Roblox сравнимо с Deepwoken.</li>
+                    <li data-en=" Full support for the game both from the first person and from the third person for players with VR, Xbox Gamepad, PC (phones maybe)."><strong>03</strong> Полная поддержка игры как от первого лица так и от третьего лица для игроков с VR, Xbox Gamepad, PC.(телефоны может быть)</li>
+                    <li data-en=" The best sound and level design in Roblox, to achieve the most unforgettable atmosphere in the game."><strong>04</strong> Самый лучший саунд и левел дизайн в Roblox, для достижения самой не забываемой atmosphere в игре.</li>
                 </ul>
             </div>
         </div>
 
         <!-- Карточка «Когда релиз?» под сеткой из двух карточек -->
-<div style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="skills-card basic-card">
-        
-        <!-- Заголовок КВАНДО РЕЛИЗ -->
-        <h3 style="color: var(--accent-color); margin-bottom: 15px;">КОГДА РЕЛИЗ?</h3>
-        <ul>
-            <li>На момент релиза запланировано 23 ограбления, огромное количество проработанных механик и масса крутых фич.</li>
-            <li>Точную дату релиза мы не планируем, так как невозможно со 100% точностью рассчитать время на разработку, но мы готовы назвать примерные сроки.</li>
-        </ul>
-        
-        <!-- Заголовок ПРИМЕРНАЯ ДАТА -->
-        <h3 style="color: var(--accent-color); margin-top: 25px; margin-bottom: 15px;">ПРИМЕРНАЯ ДАТА РЕЛИЗА ВЕРСИИ 1.0 — Q3 2027</h3>
-        <ul>
-            <li>[Финальные сроки зависят от количества багов, которые придется исправлять, и от того, насколько критичными они будут].</li>
-            <li><strong>Но учтите:</strong> до полноценного релиза вас ждет еще много этапов открытых и закрытых тестирований!</li>
-        </ul>
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <div class="skills-card basic-card">
+                
+                <!-- Заголовок КВАНДО РЕЛИЗ -->
+                <h3 data-en="WHEN IS THE RELEASE?" style="color: var(--accent-color); margin-bottom: 15px;">КОГДА РЕЛИЗ?</h3>
+                <ul>
+                    <li data-en="There are 23 heists planned for release, a lot of mechanics and a lot of cool features.">На момент релиза запланировано 23 ограбления, огромное количество проработанных механик и масса крутых фич.</li>
+                    <li data-en="The exact release date will not be planned, since we cannot calculate the time it will take to develop, but we are ready to give an approximate date.">Точную дату релиза мы не планируем, так как невозможно со 100% точностью рассчитать время на разработку, но мы готовы назвать примерные сроки.</li>
+                </ul>
+                
+                <!-- Заголовок ПРИМЕРНАЯ ДАТА -->
+                <h3 data-en="APPROXIMATE RELEASE DATE V1.0 — Q3 2027" style="color: var(--accent-color); margin-top: 25px; margin-bottom: 15px;">ПРИМЕРНАЯ ДАТА РЕЛИЗА ВЕРСИИ 1.0 — Q3 2027</h3>
+                <ul>
+                    <li data-en="[Final terms depend on how many bugs will have to be fixed and how critical they will be].">[финальные сроки зависят от количества багов, которые придется исправлять, и от того, насколько критичными они будут].</li>
+                    <li data-en=" But note: there will still be many stages of open and closed testing before the full release!"><strong>Но учтите:</strong> до полноценного релиза вас ждет еще много этапов открытых и закрытых тестирований!</li>
+                </ul>
 
-    </div>
-</div>
+            </div>
+        </div>
         
         <!-- РАЗДЕЛ 02: НАБОР В КОМАНДУ -->
         <div class="section-header">
             <span class="section-number">02</span>
-            <h2 class="section-title">Набор в команду</h2>
+            <h2 class="section-title" data-en="Team Recruitment">Набор в команду</h2>
             <div class="section-line"></div>
         </div>
 
         <section id="hiring" class="skills-card hiring-zone">
             <div class="hiring-header">
-                <h3>Ищем Тестировщиков (QA)</h3>
-                <span class="salary-badge">На добровольной основе / Без оплаты</span>
+                <h3 data-en="Looking for Testers (QA)">Ищем Тестировщиков (QA)</h3>
+                <span class="salary-badge" data-en="On a voluntary basis / Unpaid">На добровольной основе / Без оплаты</span>
             </div>
-            <p class="hiring-desc">
-                Если вы любите наши игры, хотите первыми находить баги, тестировать секретные обновления 
-                и напрямую общаться с разработчиками — мы ждем вас!
+            <p class="hiring-desc" data-en="If you love our games, want to be the first to find bugs, test secret updates, and communicate directly with developers — we are waiting for you!">
+                Если вы любите наши игры, хотите первыми находить баги, тестировать секретные обновления и напрямую общаться с разработчиками — мы ждем вас!
             </p>
             <div class="requirements-grid">
                 <div>
-                    <h4>Что нужно делать:</h4>
+                    <h4 data-en="What you need to do:">Что нужно делать:</h4>
                     <ul>
-                        <li>Искать критические ошибки и дюпы.</li>
-                        <li>Писать понятные отчеты (баг-репорты).</li>
-                        <li>Проверять баланс новых обновлений.</li>
+                        <li data-en="look for critical errors and exploits.">искать критические ошибки и дюпы.</li>
+                        <li data-en="Write clear reports (bug reports).">Писать понятные отчеты (баг-репорты).</li>
+                        <li data-en="Check the balance of new updates.">Проверять баланс новых обновлений.</li>
                     </ul>
                 </div>
                 <div>
-                    <h4>Что мы предлагаем взамен:</h4>
+                    <h4 data-en="What we offer in return:">Что мы предлагаем взамен:</h4>
                     <ul>
-                        <li>Уникальный тег в Discord и в игре.</li>
-                        <li>Доступ к закрытым тестовым серверам.</li>
-                        <li>Бесплатные внутриигровые бонусы/валюту.</li>
+                        <li data-en="Unique tag in Discord and in-game.">Уникальный тег в Discord и в игре.</li>
+                        <li data-en="Access to closed testing servers.">Доступ к закрытым тестовым серверам.</li>
+                        <li data-en="Free in-game bonuses/currency.">Бесплатные внутриигровые бонусы/валюту.</li>
                     </ul>
                 </div>
             </div>
-            <a href="https://google.com" target="_blank" class="apply-btn">Подать заявку через форму</a>
+            <a href="https://google.com" target="_blank" class="apply-btn" data-en="Submit an application via form">Подать заявку через форму</a>
         </section>
 
         <!-- РАЗДЕЛ 03: БУДУЩИЕ ПЛАНЫ -->
         <div class="section-header">
             <span class="section-number">03</span>
-            <h2 class="section-title">Будущие планы</h2>
+            <h2 class="section-title" data-en="Future Plans">Будущие планы</h2>
             <div class="section-line"></div>
         </div>
 
         <section id="roadmap" class="skills-card roadmap-zone">
-            <h3>Запланированные новые проекты</h3>
+            <h3 data-en="Planned New Projects">Запланированные новые проекты</h3>
             <div class="roadmap-list">
                 <div class="roadmap-item">
-                    <div class="roadmap-status planned">В разработке</div>
+                    <div class="roadmap-status planned" data-en="In development">В разработке</div>
                     <div class="roadmap-content">
                         <h4>REFRACT</h4>
-                        <p>Паркур игра вдохновленная Mirrors Edge</p>
+                        <p data-en="A parkour game inspired by Mirror's Edge">Паркур игра вдохновленная Mirrors Edge</p>
                     </div>
                 </div>
             </div>
@@ -215,22 +219,76 @@
 
     </main>
    
-    <!-- НОВЫЙ БОЛЬШОЙ ПОДВАЛ В СТИЛЕ РЕФЕРЕНСА -->
-    <section id="contacts" class="footer-hero">
-        <!-- Крупный заголовок шрифтом Goretax -->
-        <h2 class="footer-hero-title">WANT TO WORK WITH US?</h2>
-        
-        <!-- Текст по центру (замени этот текст на свои правила для связи) -->
-        <div class="footer-hero-desc">
-            <p>Our Discord DMs are always open for business inquiries and partnerships.</p>
-            <p>Open a ticket in our server or jump straight into details: share your idea and timeline.</p>
-        </div>
+        <!-- НОВЫЙ БОЛЬШОЙ ПОДВАЛ В СТИЛЕ РЕФЕРЕНСА -->
+        <section id="contacts" class="footer-hero">
+            <!-- Крупный заголовок шрифтом Goretax -->
+            <h2 class="footer-hero-title" data-ru="ХОТИТЕ РАБОТАТЬ С НАМИ?">WANT TO WORK WITH US?</h2>
+            
+            <!-- Текст по центру (замени этот текст на свои правила для связи) -->
+            <div class="footer-hero-desc">
+                <p data-ru="Личные сообщения в Discord всегда открыты для деловых предложений и партнерства.">Our Discord DMs are always open for business inquiries and partnerships.</p>
+                <p data-ru="Создайте тикет на нашем сервере или сразу переходите к деталям: поделитесь своей идеей и сроками.">Open a ticket in our server or jump straight into details: share your idea and timeline.</p>
+            </div>
+            
+            <!-- Тонкая аккуратная строчка в самом низу -->
+            <div class="footer-sub-bar">
+                <span>QUANT-STUDIO / ROBLOX DEVELOPMENT</span>
+            </div>
+        </section>
 
-        <!-- Тонкая аккуратная строчка в самом низу -->
-        <div class="footer-sub-bar">
-            <span>QUANT-STUDIO / ROBLOX DEVELOPMENT</span>
-        </div>
-    </section>
+    <!-- СКРИПТ МУЛЬТИЯЗЫЧНОСТИ -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const langBtn = document.getElementById("lang-toggle-btn");
+            // Проверяем сохраненный язык пользователя или ставим русский по умолчанию
+            let currentLang = localStorage.getItem("site-lang") || "ru";
+
+            // Функция, которая пробегается по всем элементам и меняет текст
+            function applyLanguage(lang) {
+                document.querySelectorAll("[data-en], [data-ru]").forEach(el => {
+                    // Если элемент имеет тег strong внутри (например номера пунктов), сохраняем его
+                    const strongTag = el.querySelector("strong");
+                    const strongHtml = strongTag ? strongTag.outerHTML : "";
+
+                    if (lang === "en") {
+                        if (el.hasAttribute("data-en")) {
+                            el.innerHTML = strongHtml + el.getAttribute("data-en");
+                        }
+                    } else {
+                        // Если переключаем на RU, возвращаем оригинальный русский текст
+                        if (el.hasAttribute("data-ru")) {
+                            el.innerHTML = strongHtml + el.getAttribute("data-ru");
+                        } else if (el.dataset.originalHtml) {
+                            el.innerHTML = el.dataset.originalHtml;
+                        }
+                    }
+                });
+
+                // Меняем текст на самой кнопке переключения
+                langBtn.textContent = lang === "ru" ? "EN" : "RU";
+                // Сохраняем выбор пользователя в браузере
+                localStorage.setItem("site-lang", lang);
+            }
+
+            // Запоминаем изначальный русский текст при первой загрузке страницы
+            document.querySelectorAll("[data-en]").forEach(el => {
+                if (!el.hasAttribute("data-ru")) {
+                    el.dataset.originalHtml = el.innerHTML;
+                }
+            });
+
+            // Вешаем событие клика на кнопку в шапке
+            if (langBtn) {
+                langBtn.addEventListener("click", () => {
+                    currentLang = currentLang === "ru" ? "en" : "ru";
+                    applyLanguage(currentLang);
+                });
+            }
+
+            // Применяем язык сразу при загрузке страницы
+            applyLanguage(currentLang);
+        });
+    </script>
     
         <!-- Скрипт, который блокирует автоскролл при загрузке видео -->
     <script>

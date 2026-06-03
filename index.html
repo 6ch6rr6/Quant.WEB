@@ -42,6 +42,7 @@
 
     <!-- Главный контейнер -->
     <main class="container">
+        <!-- ================= ТАБ 1: ГЛАВНЯ ================= -->
             <div id="main-page" class="tab-content active">
  <!-- САМЫЙ ПЕРВЫЙ БЛОК: БИО СТУДИИ (QUANT-STUDIO) -->
         <section id="about" class="profile-card">
@@ -222,7 +223,46 @@
             </div>
        
 
- <!-- ================= ТАБ 2: МАСШТАБНОЕ FAQ ================= -->
+<!-- ================= ТАБ 2: ВАКАНСИИ (Вынесли сюда) ================= -->
+    <div id="hiring-page" class="tab-content">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title" data-en="Team Recruitment">Набор в команду</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- Твой старый блок вакансий, обернутый в локализацию -->
+        <section class="skills-card hiring-zone" style="margin-top: 25px;">
+            <div class="hiring-header">
+                <h3 data-en="Looking for Testers (QA)">Ищем Тестировщиков (QA)</h3>
+                <span class="salary-badge" data-en="On a voluntary basis / Unpaid">На добровольной основе / Без оплаты</span>
+            </div>
+            <p class="hiring-desc" data-en="If you love our games, want to be the first to find bugs, test secret updates, and communicate directly with developers — we are waiting for you!">
+                Если вы любите наши игры, хотите первыми находить баги, тестировать секретные обновления и напрямую общаться с разработчиками — мы ждем вас!
+            </p>
+            <div class="requirements-grid">
+                <div>
+                    <h4 data-en="What you need to do:">Что нужно делать:</h4>
+                    <ul>
+                        <li data-en="look for critical errors and exploits.">искать критические ошибки и дюпы.</li>
+                        <li data-en="Write clear reports (bug reports).">Писать понятные отчеты (баг-репорты).</li>
+                        <li data-en="Check the balance of new updates.">Проверять баланс новых обновлений.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 data-en="What we offer in return:">Что мы предлагаем взамен:</h4>
+                    <ul>
+                        <li data-en="Unique tag in Discord and in-game.">Уникальный тег в Discord и в игре.</li>
+                        <li data-en="Access to closed testing servers.">Доступ к закрытым тестовым серверам.</li>
+                        <li data-en="Free in-game bonuses/currency.">Бесплатные внутриигровые бонусы/валюту.</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://google.com" target="_blank" class="apply-btn" data-en="Submit an application via form">Подать заявку через форму</a>
+        </section>
+    </div>
+        
+ <!-- ================= ТАБ 3: МАСШТАБНОЕ FAQ ================= -->
     <div id="faq-page" class="tab-content">
         <div class="section-header">
             <span class="section-number">FAQ</span>
@@ -260,6 +300,41 @@
 
             <!-- Сюда ты сможешь добавлять новые карточки-вопросы по аналогии -->
 
+        </div>
+    </div>
+
+    <!-- ================= ТАБ 4: СОЦСЕТИ (Новый раздел) ================= -->
+    <div id="socials-page" class="tab-content">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2 class="section-title" data-en="Our Social Media">Наши социальные сети</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- Карточка со ссылками на соцсети -->
+        <div class="skills-card basic-card" style="margin-top: 25px;">
+            <h3 style="color: var(--accent-color); margin-bottom: 20px;" data-en="JOIN OUR COMMUNITY">ПРИСОЕДИНЯЙТЕСЬ К НАШЕМУ СООБЩЕСТВУ</h3>
+            <p style="margin-bottom: 25px;" data-en="Stay tuned for updates, read development logs, and chat with other players on our official platforms.">
+                Следите за обновлениями в реальном времени, читайте логи разработки и общайтесь с другими игроками на наших официальных платформах.
+            </p>
+            
+            <!-- Контейнер для красивых кнопок соцсетей -->
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <!-- Ссылка на Discord -->
+                <a href="ТВОЯ_ССЫЛКА_НА_ДИСКОРД" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #5865F2; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: opacity 0.2s;">
+                    <span>🎮</span> Discord
+                </a>
+                
+                <!-- Ссылка на Roblox Группу -->
+                <a href="ТВОЯ_ССЫЛКА_НА_РОБЛОКС" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #111; color: #fff; padding: 12px 24px; border-radius: 6px; border: 1px solid #333; text-decoration: none; font-weight: 600; font-size: 14px; transition: opacity 0.2s;">
+                    <span>🟥</span> Roblox Group
+                </a>
+
+                <!-- Ссылка на YouTube (если есть, или можешь удалить этот блок) -->
+                <a href="ТВОЯ_ССЫЛКА_НА_ЮТУБ" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #FF0000; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: opacity 0.2s;">
+                    <span>📺</span> YouTube
+                </a>
+            </div>
         </div>
     </div>
         

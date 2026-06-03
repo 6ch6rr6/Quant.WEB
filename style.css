@@ -647,3 +647,16 @@ body {
     color: var(--accent-color);
     background: rgba(255, 255, 255, 0.05);
 }
+
+/* Крупные белые иконки в стиле guns.lol */
+.social-icon-link svg {
+    fill: #ffffff !important; /* Убирает черный цвет, делает иконки ярко-белыми */
+    opacity: 0.55; /* Базовая прозрачность */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Эффект чистого ховера без неона */
+.social-icon-link:hover svg {
+    opacity: 1; /* Полная 100% белая яркость при наведении */
+    transform: scale(1.08); /* Минимальное аккуратное увеличение */
+}

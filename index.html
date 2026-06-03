@@ -544,21 +544,64 @@
         applyLanguage(currentLang);
 
 
-        // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК (ТАБОВ) ===
+         // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК С ПРЯМЫМИ ССЫЛКАМИ ===
         const tabButtons = document.querySelectorAll(".tab-btn");
         const tabContents = document.querySelectorAll(".tab-content");
 
+        // Функция активации нужной вкладки
+        function switchTab(targetTabId) {
+            // Находим кнопку, у которой data-tab совпадает с ID вкладки
+            const targetBtn = document.querySelector(`.tab-btn[data-tab="${targetTabId}"]`);
+            const targetContent = document.getElementById(targetTabId);
+
+            if (targetContent && targetBtn) {
+                // 1. Сбрасываем активные классы у кнопок и контента
+                tabButtons.forEach(b => b.classList.remove("active"));
+                tabContents.forEach(c => c.classList.remove("active"));
+
+                // 2. Активируем нужные элементы
+                targetBtn.classList.add("active");
+                targetContent.classList.add("active");
+
+                // 3. Скроллим вверх страницы
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }
+
+        // Слушаем клики по кнопкам меню
         tabButtons.forEach(btn => {
             btn.addEventListener("click", () => {
                 const targetTab = btn.getAttribute("data-tab");
+                
+                // Переключаем вкладку визуально
+                switchTab(targetTab);
 
-                tabButtons.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-
-                tabContents.forEach(content => content.classList.remove("active"));
-                const activeContent = document.getElementById(targetTab);
-                if (activeContent) activeContent.classList.add("active");
+                // МАГИЯ: Меняем адресную строку без перезагрузки страницы (создаем ссылку)
+                // Вместо "main-page" для главной оставим чистый URL, для остальных — их ID
+                if (targetTab === "main-page") {
+                    history.pushState(null, null, " ");
+                } else {
+                    history.pushState(null, null, "#" + targetTab.replace("-page", ""));
+                }
             });
+        });
+
+        // ПРОВЕРКА ССЫЛКИ ПРИ ЗАГРУЗКЕ САЙТА
+        // Читаем то, что написано после знака # (например: #faq, #hiring, #socials)
+        const currentHash = window.location.hash.replace("#", "");
+        
+        if (currentHash) {
+            // Если в ссылке есть hash, открываем соответствующую вкладку
+            switchTab(currentHash + "-page");
+        } else {
+            // Если ссылки нет, по умолчанию открывается главная
+            switchTab("main-page");
+        }
+
+        // Слушаем кнопки браузера "Назад" / "Вперед"
+        window.addEventListener("popstate", () => {
+            const hash = window.location.hash.replace("#", "");
+            switchTab(hash ? hash + "-page" : "main-page");
         });
 
 

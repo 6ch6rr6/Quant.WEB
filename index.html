@@ -25,19 +25,19 @@
         </button>
     </div>
 
-    <!-- Шапка сайта -->
-    <header class="navbar">
-        <div class="logo">QUANT-STUDIO</div>
-        <nav class="nav-links">
-            <a href="#about" data-en="About us">О нас</a>
-            <a href="#projects" data-en="Our project">Наш проект</a>
-            <a href="#hiring" data-en="Hiring">Вакансии</a>
-            <a href="#roadmap" data-en="Roadmap">Планы</a>
-            
-            <!-- Кнопка переключения языка -->
-            <button id="lang-toggle-btn" class="lang-btn">🇷🇺 RU</button>
-        </nav>
-    </header>
+<!-- Шапка сайта с кнопками переключения разделов -->
+<header class="navbar">
+    <div class="logo">QUANT-STUDIO</div>
+    <nav class="nav-links">
+        <!-- Кнопки вкладок -->
+        <button class="tab-btn active" data-tab="main" data-en="Home">Главная</button>
+        <button class="tab-btn" data-tab="roles" data-en="Discord Roles">Роли Discord</button>
+        <button class="tab-btn" data-tab="hiring-tab" data-en="Hiring">Вакансии</button>
+        
+        <!-- Наша кнопка переключения языка с флагом (остается на месте) -->
+        <button id="lang-toggle-btn" class="lang-btn">🇷🇺 RU</button>
+    </nav>
+</header>
 
     <!-- Главный контейнер -->
     <main class="container">

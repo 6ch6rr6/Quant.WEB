@@ -648,15 +648,21 @@ body {
     background: rgba(255, 255, 255, 0.05);
 }
 
-/* Крупные белые иконки в стиле guns.lol */
-.social-icon-link svg {
-    fill: #ffffff !important; /* Убирает черный цвет, делает иконки ярко-белыми */
-    opacity: 0.55; /* Базовая прозрачность */
-    transition: all 0.2s ease-in-out;
+/* Базовые стили для новых PNG картинок-иконок */
+.social-icon-link img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    /* Секретная магия: инвертируем черный цвет картинок в белый (brightness делает их чисто белыми) */
+    filter: invert(1) brightness(2); 
+    opacity: 0.55; /* Делаем их слегка приглушенными */
+    transition: all 0.25s ease-in-out;
 }
 
-/* Эффект чистого ховера без неона */
-.social-icon-link:hover svg {
-    opacity: 1; /* Полная 100% белая яркость при наведении */
-    transform: scale(1.08); /* Минимальное аккуратное увеличение */
+/* Эффект при наведении курсора */
+.social-icon-link:hover img {
+    opacity: 1; /* Полная яркость */
+    transform: scale(1.1); /* Легкое увеличение */
+    /* Убираем белый фильтр и красим иконку в малиновый цвет (подгонка под --accent-color) */
+    filter: invert(21%) sepia(100%) saturate(6281%) hue-rotate(347deg) brightness(91%) contrast(108%);
 }

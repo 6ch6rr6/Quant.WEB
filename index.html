@@ -279,58 +279,85 @@
         </section>
 
     <!-- СКРИПТ МУЛЬТИЯЗЫЧНОСТИ -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const langBtn = document.getElementById("lang-toggle-btn");
-            // Проверяем сохраненный язык пользователя или ставим русский по умолчанию
-            let currentLang = localStorage.getItem("site-lang") || "ru";
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // === ЛОГИКА МУЛЬТИЯЗЫЧНОСТИ ===
+        const langBtn = document.getElementById("lang-toggle-btn");
+        let currentLang = localStorage.getItem("site-lang") || "ru";
 
-            // Функция, которая пробегается по всем элементам и меняет текст
-            function applyLanguage(lang) {
-                document.querySelectorAll("[data-en], [data-ru]").forEach(el => {
-                    // Если элемент имеет тег strong внутри (например номера пунктов), сохраняем его
-                    const strongTag = el.querySelector("strong");
-                    const strongHtml = strongTag ? strongTag.outerHTML : "";
+        function applyLanguage(lang) {
+            document.querySelectorAll("[data-en], [data-ru]").forEach(el => {
+                const strongTag = el.querySelector("strong");
+                const strongHtml = strongTag ? strongTag.outerHTML : "";
 
-                    if (lang === "en") {
-                        if (el.hasAttribute("data-en")) {
-                            el.innerHTML = strongHtml + el.getAttribute("data-en");
-                        }
-                    } else {
-                        // Если переключаем на RU, возвращаем оригинальный русский текст
-                        if (el.hasAttribute("data-ru")) {
-                            el.innerHTML = strongHtml + el.getAttribute("data-ru");
-                        } else if (el.dataset.originalHtml) {
-                            el.innerHTML = el.dataset.originalHtml;
-                        }
+                if (lang === "en") {
+                    if (el.hasAttribute("data-en")) {
+                        el.innerHTML = strongHtml + el.getAttribute("data-en");
                     }
-                });
-
-                // Меняем текст на самой кнопке переключения
-                langBtn.textContent = lang === "ru" ? "EN" : "RU";
-                // Сохраняем выбор пользователя в браузере
-                localStorage.setItem("site-lang", lang);
-            }
-
-            // Запоминаем изначальный русский текст при первой загрузке страницы
-            document.querySelectorAll("[data-en]").forEach(el => {
-                if (!el.hasAttribute("data-ru")) {
-                    el.dataset.originalHtml = el.innerHTML;
+                } else {
+                    if (el.hasAttribute("data-ru")) {
+                        el.innerHTML = strongHtml + el.getAttribute("data-ru");
+                    } else if (el.dataset.originalHtml) {
+                        el.innerHTML = el.dataset.originalHtml;
+                    }
                 }
             });
 
-            // Вешаем событие клика на кнопку в шапке
             if (langBtn) {
-                langBtn.addEventListener("click", () => {
-                    currentLang = currentLang === "ru" ? "en" : "ru";
-                    applyLanguage(currentLang);
-                });
+                langBtn.innerHTML = lang === "ru" ? "🇬🇧 EN" : "🇷🇺 RU";
             }
+            localStorage.setItem("site-lang", lang);
+        }
 
-            // Применяем язык сразу при загрузке страницы
-            applyLanguage(currentLang);
+        document.querySelectorAll("[data-en]").forEach(el => {
+            if (!el.hasAttribute("data-ru")) el.dataset.originalHtml = el.innerHTML;
         });
-    </script>
+
+        if (langBtn) {
+            langBtn.addEventListener("click", () => {
+                currentLang = currentLang === "ru" ? "en" : "ru";
+                applyLanguage(currentLang);
+            });
+        }
+        applyLanguage(currentLang);
+
+
+        // === ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК (ТАБОВ) ===
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetTab = btn.getAttribute("data-tab");
+
+                tabButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                tabContents.forEach(content => content.classList.remove("active"));
+                const activeContent = document.getElementById(targetTab);
+                if (activeContent) activeContent.classList.add("active");
+            });
+        });
+
+
+        // === ЛОГИКА РАСКРЫТИЯ FAQ (АККОРДЕОН) ===
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const answer = item.querySelector('.faq-answer');
+                const arrow = item.querySelector('.faq-arrow');
+                
+                if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+                    answer.style.maxHeight = '0px';
+                    arrow.style.transform = 'rotate(0deg)';
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    });
+</script>
+
     
         <!-- Скрипт, который блокирует автоскролл при загрузке видео -->
     <script>

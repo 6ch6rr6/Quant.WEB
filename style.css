@@ -43,9 +43,17 @@ body {
     background-attachment: fixed !important; /* Чтобы сетка красиво стояла на месте при скролле */
 }
 
-/* СКРЫВАЕМ СКРОЛЛБАРЫ */
-body::-webkit-scrollbar { display: none; }
-body { -ms-overflow-style: none; scrollbar-width: none; }
+/* Скрываем скроллбар для Chrome, Safari и Opera */
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Скрываем скроллбар для Firefox и IE/Edge */
+html, body {
+    -ms-overflow-style: none !important;  /* IE и Edge */
+    scrollbar-width: none !important;  /* Firefox */
+}
 
 /* ОБНУЛЕНИЕ */
 * {

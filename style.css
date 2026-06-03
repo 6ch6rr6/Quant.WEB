@@ -664,5 +664,5 @@ body {
     opacity: 1; /* Полная яркость */
     transform: scale(1.1); /* Легкое увеличение */
     /* Убираем белый фильтр и красим иконку в малиновый цвет (подгонка под --accent-color) */
-    filter: invert(21%) sepia(100%) saturate(6281%) hue-rotate(347deg) brightness(91%) contrast(108%);
+    filter: sepia(100%) saturate(6281%) hue-rotate(347deg) brightness(91%) contrast(108%);
 }

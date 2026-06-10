@@ -82,7 +82,7 @@ html {
     z-index: 100;
 }
 
-/* НАЗВАНИЕ СТУДИИ В МЕНЮ (Возвращаем оригинальную толщину Goretax) */
+/* НАЗВАНИЕ СТУДИИ В МЕНЮ */
 .logo {
     font-family: 'Goretax', sans-serif !important; 
     font-size: 16.5px;
@@ -92,23 +92,49 @@ html {
     text-transform: uppercase;
 }
 
-/* КНОПКИ МЕНЮ */
-.nav-links a {
-    font-family: 'Plus Jakarta Sans', sans-serif; 
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #a1a1aa;
-    text-decoration: none;
+/* КНОПКИ МЕНЮ (Базовые настройки для картинок) */
+.nav-links .tab-btn,
+.nav-links .lang-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     margin-left: 22px;
-    transition: color 0.2s;
+    
+    /* Задаем физический размер для картинок (можешь менять) */
+    width: 20px;
+    height: 20px;
+    
+    /* Настройки отображения фоновой картинки */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* Делаем иконки слегка приглушенными, как твой цвет #a1a1aa */
+    opacity: 0.6; 
+    transition: opacity 0.2s;
+    
+    /* Полностью скрываем оригинальный текст (и RU, и EN) */
+    font-size: 0px !important; 
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.nav-links a:hover {
-    color: var(--accent-color);
+/* Эффект при наведении и для активной вкладки (иконка становится яркой) */
+.nav-links .tab-btn:hover,
+.nav-links .lang-btn:hover,
+.nav-links .tab-btn.active {
+    opacity: 1;
 }
 
+/* ПОДКЛЮЧАЕМ КАРТИНКИ ИЗ ТВОЕЙ ПАПКИ */
+.nav-links [data-tab="main-page"] { background-image: url('Images/home.png'); }
+.nav-links [data-tab="hiring-page"] { background-image: url('Images/hiring.png'); }
+.nav-links [data-tab="faq-page"] { background-image: url('Images/faq.png'); }
+.nav-links [data-tab="wiki-page"] { background-image: url('Images/wiki.png'); }
+.nav-links [data-tab="devs-page"] { background-image: url('Images/developers.png'); } /* Новая иконка */
+.nav-links [data-tab="socials-page"] { background-image: url('Images/socials.png'); }
+.nav-links .lang-btn { background-image: url('Images/lang.png'); }
 
 /* --- ИСКЛЮЧЕНИЯ ДЛЯ ЗАГОЛОВКОВ --- */
 

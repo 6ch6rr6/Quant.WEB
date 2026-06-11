@@ -68,7 +68,10 @@ html {
     overflow-x: hidden;
 }
 
-/* НАВИГАЦИЯ */
+/* ==========================================================================
+   НАВИГАЦИЯ (ИКОНКИ-КАРТИНКИ И СТИЛЬНЫЙ ТОГГЛ)
+   ========================================================================== */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -92,49 +95,176 @@ html {
     text-transform: uppercase;
 }
 
-/* КНОПКИ МЕНЮ (Базовые настройки для картинок) */
-.nav-links .tab-btn,
-.nav-links .lang-btn {
-    background: none;
-    border: none;
+/* КНОПКИ МЕНЮ (ИКОНКИ С ТОЧНЫМ ЦВЕТОВЫМ ФИЛЬТРОМ) */
+.nav-links .tab-btn {
+    background-color: transparent !important; 
+    border: none !important;                  
+    box-shadow: none !important;              
     padding: 0;
     cursor: pointer;
-    margin-left: 22px;
     
-    /* Задаем физический размер для картинок (можешь менять) */
-    width: 20px;
-    height: 20px;
+    /* Расстояние между иконками */
+    margin-left: 14px; 
     
-    /* Настройки отображения фоновой картинки */
+    /* Размер обычных иконок (25px) */
+    width: 25px;
+    height: 25px;
+    
+    /* Настройки отображения картинок */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     
-    /* Делаем иконки слегка приглушенными, как твой цвет #a1a1aa */
-    opacity: 0.6; 
-    transition: opacity 0.2s;
+    /* Неактивные иконки слегка приглушены */
+    opacity: 0.5; 
     
-    /* Полностью скрываем оригинальный текст (и RU, и EN) */
+    /* По умолчанию фильтров нет */
+    filter: none;
+    
+    /* Плавный переход для прозрачности, РАЗМЕРА и неонового эффекта */
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), filter 0.25s ease;
+    
     font-size: 0px !important; 
     display: inline-block;
     vertical-align: middle;
 }
 
-/* Эффект при наведении и для активной вкладки (иконка становится яркой) */
+/* ЭФФЕКТ ПРИ НАВЕДЕНИИ И ДЛЯ АКТИВНОЙ ВКЛАДКИ */
 .nav-links .tab-btn:hover,
-.nav-links .lang-btn:hover,
 .nav-links .tab-btn.active {
+    opacity: 1 !important;
+    
+    /* ТОЧНЫЙ МАТЕМАТИЧЕСКИЙ ФИЛЬТР ДЛЯ ЦВЕТА #e11d48:
+       Он делает любую иконку малиновой + добавляет неоновое свечение */
+    filter: invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
+            drop-shadow(0 0 6px var(--accent-color)) !important;
+}
+
+/* ВЫБРАННЫЙ РАЗДЕЛ (АКТИВНАЯ ИКОНКА) */
+.nav-links .tab-btn.active {
+    /* Увеличиваем активную иконку до 28px через scale */
+    transform: scale(1.12) !important; 
+}
+
+/* ПУТИ К ТВОИМ КАРТИНКАМ ИКОНОК */
+.nav-links [data-tab="main-page"] { background-image: url('images/home.svg') !important; }
+.nav-links [data-tab="hiring-page"] { background-image: url('images/hiring.svg') !important; }
+.nav-links [data-tab="faq-page"] { background-image: url('images/faq.svg') !important; }
+.nav-links [data-tab="wiki-page"] { background-image: url('images/wiki.svg') !important; }
+.nav-links [data-tab="devs-page"] { background-image: url('images/developers.svg') !important; }
+.nav-links [data-tab="socials-page"] { background-image: url('images/socials.svg') !important; }
+
+
+
+/* ==========================================================================
+   КНОПКА ЯЗЫКА (МИНИМАЛИСТИЧНЫЙ ТОГГЛ С ПРОЯВЛЕНИЕМ ТЕКСТА)
+   ========================================================================== */
+
+.nav-links #lang-toggle-btn {
+    background-color: #141416;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-left: 24px;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    
+    /* Возвращаем ширину 68px, чтобы влезли буквы */
+    width: 68px; 
+    height: 28px;
+    border-radius: 14px;
+    
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6), 
+                inset -1px -1px 3px rgba(255,255,255,0.02);
+    
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    vertical-align: middle;
+    
+    /* НАСТРОЙКА КРУГЛОГО ФЛАГА (По умолчанию для RU — слева) */
+    background-image: url('Images/flag-ru.png');
+    background-position: 4px center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    
+    /* Плавный перелёт флага и смена рамки */
+    transition: background-position 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                background-image 0.3s ease, 
+                border-color 0.2s;
+    
+    /* Скрываем прыгающий системный текст от JS */
+    font-size: 0px !important;
+    color: transparent !important;
+    
+    /* Защита от дребезжания */
+    transform: none !important;
+    top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Ховер на капсулу */
+.nav-links #lang-toggle-btn:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: none !important;
+}
+
+/* СТИЛИ ДЛЯ НАДПИСЕЙ RU И EN (Мёртво стоят по краям) */
+.nav-links #lang-toggle-btn::before,
+.nav-links #lang-toggle-btn::after {
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    font-weight: 700;
+    font-size: 10px !important;
+    letter-spacing: 0.5px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    transition: opacity 0.3s ease, color 0.2s ease;
+    z-index: 1; /* Под летящим флагом */
+}
+
+/* Буквы EN всегда слева */
+.nav-links #lang-toggle-btn::before {
+    content: "EN";
+    left: 12px;
+    color: #8a8a93;
+    opacity: 0; /* Скрыты в режиме RU */
+}
+
+/* Буквы RU всегда справа */
+.nav-links #lang-toggle-btn::after {
+    content: "RU";
+    right: 12px;
+    color: #8a8a93;
+    opacity: 1; /* Горят в режиме RU */
+}
+
+/* Свечение активного RU белым цветом при наведении */
+.nav-links #lang-toggle-btn:hover::after {
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   ПЛАВНЫЙ ПЕРЕЛЁТ ФЛАГА И СМЕНА ТЕКСТА ПРИ КЛАССЕ .EN
+   ========================================================================== */
+
+/* Когда на кнопке активен класс .en (включен английский язык) */
+.nav-links #lang-toggle-btn.en {
+    background-image: url('Images/flag-en.png');
+    background-position: 44px center; /* Сдвигаем флаг вправо */
+}
+
+/* В режиме EN гасим текст RU и проявляем текст EN */
+.nav-links #lang-toggle-btn.en::after {
+    opacity: 0;
+}
+.nav-links #lang-toggle-btn.en::before {
     opacity: 1;
 }
 
-/* ПОДКЛЮЧАЕМ КАРТИНКИ ИЗ ТВОЕЙ ПАПКИ */
-.nav-links [data-tab="main-page"] { background-image: url('Images/home.png'); }
-.nav-links [data-tab="hiring-page"] { background-image: url('Images/hiring.png'); }
-.nav-links [data-tab="faq-page"] { background-image: url('Images/faq.png'); }
-.nav-links [data-tab="wiki-page"] { background-image: url('Images/wiki.png'); }
-.nav-links [data-tab="devs-page"] { background-image: url('Images/developers.png'); } /* Новая иконка */
-.nav-links [data-tab="socials-page"] { background-image: url('Images/socials.png'); }
-.nav-links .lang-btn { background-image: url('Images/lang.png'); }
+/* Свечение активного EN белым цветом при наведении */
+.nav-links #lang-toggle-btn.en:hover::before {
+    color: #ffffff;
+}
 
 /* --- ИСКЛЮЧЕНИЯ ДЛЯ ЗАГОЛОВКОВ --- */
 

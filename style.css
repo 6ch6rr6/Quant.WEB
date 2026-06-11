@@ -95,7 +95,7 @@ html {
     text-transform: uppercase;
 }
 
-/* КНОПКИ МЕНЮ (ИКОНКИ С ЦЕНТРИРОВАНИЕМ И ИДЕАЛЬНЫМ УВЕЛИЧЕНИЕМ) */
+/* КНОПКИ МЕНЮ (ИДЕАЛЬНОЕ УВЕЛИЧЕНИЕ ИЗ ЦЕНТРА НА ХОВЕРЕ) */
 .nav-links .tab-btn {
     background-color: transparent !important; 
     border: none !important;                  
@@ -112,7 +112,7 @@ html {
     background-repeat: no-repeat;
     background-position: center;
     
-    /* ИДЕАЛЬНЫЙ АНЧОР-ПОИНТ ПО ЦЕНТРУ: выравниваем иконку строго из середины */
+    /* ИДЕАЛЬНЫЙ АНЧОР-ПОИНТ ПО ЦЕНТРУ */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -124,27 +124,28 @@ html {
     opacity: 0.5; 
     filter: none;
     
-    /* Плавная анимация изменения прозрачности, цвета и размера из центра */
+    /* Плавная анимация изменения прозрачности, цвета и РАЗМЕРА из центра */
     transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), filter 0.25s ease;
     
     font-size: 0px !important; 
 }
 
-/* ЭФФЕКТ ПРИ НАВЕДЕНИИ (Размер ОСТАЕТСЯ 25px, иконка не дергается и не растет) */
+/* ЭФФЕКТ ПРИ НАВЕДЕНИИ КУРСОРA (Иконка плавно увеличивается!) */
 .nav-links .tab-btn:hover {
     opacity: 1 !important;
-    transform: scale(1) !important; /* Жестко держим 25px при наведении */
+    /* Плавно увеличиваем при наведении (scale 1.05 = ~26.3px) */
+    transform: scale(1.05) !important; 
     
     /* МАТЕМАТИЧЕСКИ ТОЧНЫЙ ФИЛЬТР ПОД ЦВЕТ #e11d48 + НЕОНОВОЕ СВЕЧЕНИЕ */
     filter: brightness(0) invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
             drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
-/* ВЫБРАННЫЙ РАЗДЕЛ / АКТИВНАЯ ИКОНКА (Увеличивается строго из центра до 28px) */
+/* ВЫБРАННЫЙ РАЗДЕЛ / АКТИВНАЯ ИКОНКА (Становится еще больше — ровно 28px) */
 .nav-links .tab-btn.active {
     opacity: 1 !important;
     
-    /* Увеличиваем из центра: 25px * 1.12 = ровно 28px */
+    /* Жестко фиксируем максимальное увеличение из центра: 25px * 1.12 = ровно 28px */
     transform: scale(1.12) !important; 
     
     /* Тот же точный малиновый фильтр, чтобы цвет не слетал */
@@ -152,6 +153,10 @@ html {
             drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
+/* Перестраховка: если мы наводимся на УЖЕ АКТИВНУЮ иконку, она не должна уменьшаться */
+.nav-links .tab-btn.active:hover {
+    transform: scale(1.12) !important;
+}
 /* ПУТИ К ТВОИМ PNG КАРТИНКАМ */
 .nav-links [data-tab="main-page"] { background-image: url('images/home.png') !important; }
 .nav-links [data-tab="hiring-page"] { background-image: url('images/hiring.png') !important; }

@@ -95,65 +95,75 @@ html {
     text-transform: uppercase;
 }
 
-/* КНОПКИ МЕНЮ (ИКОНКИ С ТОЧНЫМ ЦВЕТОВЫМ ФИЛЬТРОМ) */
+/* КНОПКИ МЕНЮ (ИКОНКИ С ЦЕНТРИРОВАНИЕМ И ИДЕАЛЬНЫМ УВЕЛИЧЕНИЕМ) */
 .nav-links .tab-btn {
     background-color: transparent !important; 
     border: none !important;                  
     box-shadow: none !important;              
     padding: 0;
     cursor: pointer;
-    
-    /* Расстояние между иконками */
     margin-left: 14px; 
     
-    /* Размер обычных иконок (25px) */
-    width: 25px;
-    height: 25px;
+    /* Базовый жесткий размер для всех состояний */
+    width: 25px !important;
+    height: 25px !important;
     
-    /* Настройки отображения картинок */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     
-    /* Неактивные иконки слегка приглушены */
-    opacity: 0.5; 
+    /* ИДЕАЛЬНЫЙ АНЧОР-ПОИНТ ПО ЦЕНТРУ: выравниваем иконку строго из середины */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    transform-origin: center center !important; 
     
-    /* По умолчанию фильтров нет */
+    /* По умолчанию размер оригинальный (25px) и иконки приглушены */
+    transform: scale(1) !important;
+    opacity: 0.5; 
     filter: none;
     
-    /* Плавный переход для прозрачности, РАЗМЕРА и неонового эффекта */
+    /* Плавная анимация изменения прозрачности, цвета и размера из центра */
     transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), filter 0.25s ease;
     
     font-size: 0px !important; 
-    display: inline-block;
-    vertical-align: middle;
 }
 
-/* ЭФФЕКТ ПРИ НАВЕДЕНИИ И ДЛЯ АКТИВНОЙ ВКЛАДКИ */
-.nav-links .tab-btn:hover,
-.nav-links .tab-btn.active {
+/* ЭФФЕКТ ПРИ НАВЕДЕНИИ (Размер ОСТАЕТСЯ 25px, иконка не дергается и не растет) */
+.nav-links .tab-btn:hover {
     opacity: 1 !important;
+    transform: scale(1) !important; /* Жестко держим 25px при наведении */
     
-    /* ТОЧНЫЙ МАТЕМАТИЧЕСКИЙ ФИЛЬТР ДЛЯ ЦВЕТА #e11d48:
-       Он делает любую иконку малиновой + добавляет неоновое свечение */
-    filter: invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
+    /* МАТЕМАТИЧЕСКИ ТОЧНЫЙ ФИЛЬТР ПОД ЦВЕТ #e11d48 + НЕОНОВОЕ СВЕЧЕНИЕ */
+    filter: brightness(0) invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
             drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
-/* ВЫБРАННЫЙ РАЗДЕЛ (АКТИВНАЯ ИКОНКА) */
+/* ВЫБРАННЫЙ РАЗДЕЛ / АКТИВНАЯ ИКОНКА (Увеличивается строго из центра до 28px) */
 .nav-links .tab-btn.active {
-    /* Увеличиваем активную иконку до 28px через scale */
+    opacity: 1 !important;
+    
+    /* Увеличиваем из центра: 25px * 1.12 = ровно 28px */
     transform: scale(1.12) !important; 
+    
+    /* Тот же точный малиновый фильтр, чтобы цвет не слетал */
+    filter: brightness(0) invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
+            drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
-/* ПУТИ К ТВОИМ КАРТИНКАМ ИКОНОК */
-.nav-links [data-tab="main-page"] { background-image: url('images/home.svg') !important; }
-.nav-links [data-tab="hiring-page"] { background-image: url('images/hiring.svg') !important; }
-.nav-links [data-tab="faq-page"] { background-image: url('images/faq.svg') !important; }
-.nav-links [data-tab="wiki-page"] { background-image: url('images/wiki.svg') !important; }
-.nav-links [data-tab="devs-page"] { background-image: url('images/developers.svg') !important; }
-.nav-links [data-tab="socials-page"] { background-image: url('images/socials.svg') !important; }
+/* ПУТИ К ТВОИМ PNG КАРТИНКАМ */
+.nav-links [data-tab="main-page"] { background-image: url('Images/home.png') !important; }
+.nav-links [data-tab="hiring-page"] { background-image: url('Images/hiring.png') !important; }
+.nav-links [data-tab="faq-page"] { background-image: url('Images/faq.png') !important; }
+.nav-links [data-tab="wiki-page"] { background-image: url('Images/wiki.png') !important; }
+.nav-links [data-tab="devs-page"] { background-image: url('Images/developers.png') !important; }
+.nav-links [data-tab="socials-page"] { background-image: url('Images/socials.png') !important; }
 
+/* На всякий случай скрываем текст внутри span */
+.nav-links .tab-btn span {
+    display: none !important;
+}
 
 
 /* ==========================================================================

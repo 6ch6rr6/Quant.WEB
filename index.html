@@ -61,6 +61,7 @@ General information, product information, band description, etc.">
     </nav>
 </header>
 
+
     <!-- Главный контейнер -->
     <main class="container">
         <!-- ================= ТАБ 1: ГЛАВНЯ ================= -->
@@ -482,8 +483,7 @@ General information, product information, band description, etc.">
         
     </main>
 
-    <!-- СКРИПТ МУЛЬТИЯЗЫЧНОСТИ -->
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
         // === ЛОГИКА МУЛЬТИЯЗЫЧНОСТИ ===
         const langBtn = document.getElementById("lang-toggle-btn");
@@ -509,6 +509,13 @@ General information, product information, band description, etc.">
 
             if (langBtn) {
                 langBtn.innerHTML = lang === "ru" ? "EN" : "RU";
+                
+                /* МАГИЯ АНИМАЦИИ: Добавляем класс .en если язык английский, чтобы флаг летел */
+                if (lang === "en") {
+                    langBtn.classList.add("en");
+                } else {
+                    langBtn.classList.remove("en");
+                }
             }
             localStorage.setItem("site-lang", lang);
         }
@@ -530,36 +537,26 @@ General information, product information, band description, etc.">
         const tabButtons = document.querySelectorAll(".tab-btn");
         const tabContents = document.querySelectorAll(".tab-content");
 
-        // Функция активации нужной вкладки
         function switchTab(targetTabId) {
-            // Находим кнопку, у которой data-tab совпадает с ID вкладки
             const targetBtn = document.querySelector(`.tab-btn[data-tab="${targetTabId}"]`);
             const targetContent = document.getElementById(targetTabId);
 
             if (targetContent && targetBtn) {
-                // 1. Сбрасываем активные классы у кнопок и контента
                 tabButtons.forEach(b => b.classList.remove("active"));
                 tabContents.forEach(c => c.classList.remove("active"));
 
-                // 2. Активируем нужные элементы
                 targetBtn.classList.add("active");
                 targetContent.classList.add("active");
 
-                // 3. Скроллим вверх страницы
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
-        // Слушаем клики по кнопкам меню
         tabButtons.forEach(btn => {
             btn.addEventListener("click", () => {
                 const targetTab = btn.getAttribute("data-tab");
-                
-                // Переключаем вкладку визуально
                 switchTab(targetTab);
 
-                // МАГИЯ: Меняем адресную строку без перезагрузки страницы (создаем ссылку)
-                // Вместо "main-page" для главной оставим чистый URL, для остальных — их ID
                 if (targetTab === "main-page") {
                     history.pushState(null, null, " ");
                 } else {
@@ -568,19 +565,14 @@ General information, product information, band description, etc.">
             });
         });
 
-        // ПРОВЕРКА ССЫЛКИ ПРИ ЗАГРУЗКЕ САЙТА
-        // Читаем то, что написано после знака # (например: #faq, #hiring, #socials)
         const currentHash = window.location.hash.replace("#", "");
         
         if (currentHash) {
-            // Если в ссылке есть hash, открываем соответствующую вкладку
             switchTab(currentHash + "-page");
         } else {
-            // Если ссылки нет, по умолчанию открывается главная
             switchTab("main-page");
         }
 
-        // Слушаем кнопки браузера "Назад" / "Вперед"
         window.addEventListener("popstate", () => {
             const hash = window.location.hash.replace("#", "");
             switchTab(hash ? hash + "-page" : "main-page");
@@ -604,6 +596,7 @@ General information, product information, band description, etc.">
         });
     });
 </script>
+
 
     
         <!-- Скрипт, который блокирует автоскролл при загрузке видео -->

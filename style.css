@@ -153,12 +153,12 @@ html {
 }
 
 /* ПУТИ К ТВОИМ PNG КАРТИНКАМ */
-.nav-links [data-tab="main-page"] { background-image: url('Images/home.png') !important; }
-.nav-links [data-tab="hiring-page"] { background-image: url('Images/hiring.png') !important; }
-.nav-links [data-tab="faq-page"] { background-image: url('Images/faq.png') !important; }
-.nav-links [data-tab="wiki-page"] { background-image: url('Images/wiki.png') !important; }
-.nav-links [data-tab="devs-page"] { background-image: url('Images/developers.png') !important; }
-.nav-links [data-tab="socials-page"] { background-image: url('Images/socials.png') !important; }
+.nav-links [data-tab="main-page"] { background-image: url('images/home.png') !important; }
+.nav-links [data-tab="hiring-page"] { background-image: url('images/hiring.png') !important; }
+.nav-links [data-tab="faq-page"] { background-image: url('images/faq.png') !important; }
+.nav-links [data-tab="wiki-page"] { background-image: url('images/wiki.png') !important; }
+.nav-links [data-tab="devs-page"] { background-image: url('images/developers.png') !important; }
+.nav-links [data-tab="socials-page"] { background-image: url('images/socials.png') !important; }
 
 /* На всякий случай скрываем текст внутри span */
 .nav-links .tab-btn span {
@@ -192,7 +192,7 @@ html {
     vertical-align: middle;
     
     /* НАСТРОЙКА КРУГЛОГО ФЛАГА (По умолчанию для RU — слева) */
-    background-image: url('Images/flag-ru.png');
+    background-image: url('images/flag-ru.png');
     background-position: 4px center;
     background-repeat: no-repeat;
     background-size: 20px 20px;
@@ -259,7 +259,7 @@ html {
 
 /* Когда на кнопке активен класс .en (включен английский язык) */
 .nav-links #lang-toggle-btn.en {
-    background-image: url('Images/flag-en.png');
+    background-image: url('images/flag-en.png');
     background-position: 44px center; /* Сдвигаем флаг вправо */
 }
 

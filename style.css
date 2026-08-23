@@ -1486,18 +1486,18 @@ html::after {
     z-index: 0;
     pointer-events: none;
     background:
-        radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.05),  transparent 42%),
-        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.045), transparent 44%),
-        radial-gradient(circle at 45% 82%, rgba(255, 255, 255, 0.04),  transparent 42%);
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.05),  transparent 30%),
+        radial-gradient(circle at 78% 52%, rgba(255, 255, 255, 0.045), transparent 32%),
+        radial-gradient(circle at 45% 82%, rgba(255, 255, 255, 0.04),  transparent 30%);
     background-repeat: no-repeat;
-    background-size: 150% 55%, 170% 50%, 160% 60%;
-    animation: dbGlow 18s ease-in-out infinite;
+    background-size: 140% 120%;   /* каждый градиент больше документа → срезы за пределами видимой зоны */
+    animation: dbGlow 20s ease-in-out infinite;
 }
 /* Контент держим над слоем пятен */
 .db-article > * { position: relative; z-index: 1; }
 @keyframes dbGlow {
-    0%, 100% { background-position: 0% 0%,   100% 40%, 40% 100%; }
-    50%      { background-position: 25% 18%, 72% 58%,  58% 78%; }
+    0%, 100% { background-position: 10% 10%, 90% 45%, 40% 90%; }
+    50%      { background-position: 25% 22%, 75% 58%, 55% 78%; }
 }
 @media (prefers-reduced-motion: reduce) {
     .db-article:not(.dossier)::after { animation: none; }

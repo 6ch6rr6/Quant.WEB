@@ -984,22 +984,12 @@ General information, product information, band description, etc.">
         // Категории. Уставы помечены important → показываем "!". Корпорации — lock.
         const CATEGORIES = {
             docs: { name: { ru:'Регламенты',  en:'Regulations' },  important: true },
-            wiki: { name: { ru:'Википедия',   en:'Wiki' } },
+            wiki: { name: { ru:'Википедия',   en:'Wiki' }, divider: true },
             corp: { name: { ru:'Корпорации',  en:'Corporations' }, lock: true }
         };
 
-        // Встроенные примеры (без .md): вики-статья и досье-корпорация
+        // Встроенные примеры (без .md): досье-корпорация
         const INLINE = [
-            { id:'wiki-blackout', category:'wiki',
-              title:{ ru:'Блэкауты и электросеть', en:'Blackouts and the power grid' },
-              snippet:{ ru:'Что происходит при отключении света и какие возможности это открывает.',
-                        en:'What happens during a blackout and what possibilities it opens up.' },
-              body:{ ru:`<p>Блэкаут — ключевая механика мира. При отключении света меняется поведение локаций.</p>
-                        <h4>Эффекты</h4><p>Отключаются камеры и часть охранных систем, но появляются новые угрозы.</p>
-                        <h4>Тактика</h4><p>Опытные команды планируют ограбления именно на время блэкаута.</p>`,
-                     en:`<p>A blackout is a core mechanic. When the lights go out, locations behave differently.</p>
-                        <h4>Effects</h4><p>Cameras and part of the security systems shut down, but new threats appear.</p>
-                        <h4>Tactics</h4><p>Experienced crews plan their heists exactly for the blackout window.</p>` } },
             { id:'corp-hugl', category:'corp', classified:true, clearance:'LVL-5', file:'CORP-004',
               title:{ ru:'HUGL DYNAMICS', en:'HUGL DYNAMICS' },
               snippet:{ ru:'Профиль: [ЗАСЕКРЕЧЕНО]. Связи: коррупция в [ДАННЫЕ УДАЛЕНЫ].',
@@ -1019,7 +1009,7 @@ General information, product information, band description, etc.">
         if (!listEl) return;
 
         let entries = INLINE.slice();     // сюда добавится манифест
-        let activeCat = 'all';
+        let activeCat = 'docs';           // по умолчанию — Регламенты
         let query = '';
         let currentOpenId = null;
         let loadNote = '';                // сообщение, если .md не загрузились (file://)
@@ -1086,9 +1076,10 @@ General information, product information, band description, etc.">
         const countFor = k => entries.filter(e => e.category === k).length;
 
         function renderCats() {
-            let html = `<div class="db-cat ${activeCat==='all'?'on':''}" data-cat="all">${S.all} <b>${entries.length}</b></div>`;
+            let html = '';
             for (const key in CATEGORIES) {
                 const c = CATEGORIES[key];
+                if (c.divider) html += `<div class="db-cat-sep"></div>`;
                 const imp = c.important ? '<span class="db-imp">!</span>' : '';
                 const cnt = countFor(key) + (c.lock ? ' ⚿' : '');
                 html += `<div class="db-cat ${c.lock?'lock':''} ${c.important?'imp':''} ${activeCat===key?'on':''}" data-cat="${key}">
@@ -1102,10 +1093,12 @@ General information, product information, band description, etc.">
         function renderList() {
             detailEl.classList.remove('show');
             listEl.classList.remove('hide');
-            let items = entries.filter(e => activeCat === 'all' || e.category === activeCat);
+            let items;
             if (query) {
                 const q = query.toLowerCase();
-                items = items.filter(e => (pick(e.title)+' '+pick(e.snippet)).toLowerCase().includes(q));
+                items = entries.filter(e => (pick(e.title)+' '+pick(e.snippet)).toLowerCase().includes(q));
+            } else {
+                items = entries.filter(e => e.category === activeCat);
             }
             const note = loadNote ? `<div class="db-note">${loadNote}</div>` : '';
             if (!items.length) { listEl.innerHTML = note + `<div class="db-empty">${S.none}</div>`; return; }

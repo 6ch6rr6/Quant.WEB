@@ -1285,6 +1285,8 @@ html::after {
 .db-cat.on { background: rgba(255, 255, 255, 0.07); color: #fff; }
 .db-cat b { color: #6c7480; font-weight: 400; font-family: monospace; font-size: 11px; }
 .db-cat.lock { color: #c79b4a; } .db-cat.lock b { color: #8a6d2e; }
+/* Разделитель между Регламентами и остальными разделами (вики/корпорации) */
+.db-cat-sep { height: 1px; background: rgba(255, 255, 255, 0.09); margin: 12px 8px; }
 
 /* Карточки списка (вики-скин) */
 .db-art {

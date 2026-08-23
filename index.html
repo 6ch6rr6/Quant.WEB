@@ -984,7 +984,15 @@ General information, product information, band description, etc.">
         // Категории. Уставы помечены important → показываем "!". Корпорации — lock.
         const CATEGORIES = {
             docs: { name: { ru:'Регламенты',  en:'Regulations' },  important: true },
-            wiki: { name: { ru:'Википедия',   en:'Wiki' }, divider: true },
+            wiki: { name: { ru:'Википедия',   en:'Wiki' }, divider: true, noCount: true,
+                    subs: {
+                        lore:     { name: { ru:'Лор',      en:'Lore' },
+                                    desc: { ru:'История мира, фракции, персонажи, вселенная.',
+                                            en:'World history, factions, characters, the universe.' } },
+                        gameplay: { name: { ru:'Геймплей', en:'Gameplay' },
+                                    desc: { ru:'Механики, системы, гайды — как играть.',
+                                            en:'Mechanics, systems, guides — how to play.' } }
+                    } },
             corp: { name: { ru:'Корпорации',  en:'Corporations' }, lock: true }
         };
 
@@ -1010,6 +1018,7 @@ General information, product information, band description, etc.">
 
         let entries = INLINE.slice();     // сюда добавится манифест
         let activeCat = 'docs';           // по умолчанию — Регламенты
+        let wikiSub = null;               // выбранный подраздел вики (lore/gameplay) или null = экран выбора
         let query = '';
         let currentOpenId = null;
         let loadNote = '';                // сообщение, если .md не загрузились (file://)
@@ -1081,36 +1090,84 @@ General information, product information, band description, etc.">
                 const c = CATEGORIES[key];
                 if (c.divider) html += `<div class="db-cat-sep"></div>`;
                 const imp = c.important ? '<span class="db-imp">!</span>' : '';
-                const cnt = countFor(key) + (c.lock ? ' ⚿' : '');
+                const cnt = c.noCount ? '' : (countFor(key) + (c.lock ? ' ⚿' : ''));
                 html += `<div class="db-cat ${c.lock?'lock':''} ${c.important?'imp':''} ${activeCat===key?'on':''}" data-cat="${key}">
-                    <span>${pick(c.name)}${imp}</span> <b>${cnt}</b></div>`;
+                    <span>${pick(c.name)}${imp}</span>${cnt ? ' <b>'+cnt+'</b>' : ''}</div>`;
             }
             catsEl.innerHTML = html;
             catsEl.querySelectorAll('.db-cat').forEach(el =>
-                el.addEventListener('click', () => { activeCat = el.dataset.cat; renderCats(); renderList(); }));
+                el.addEventListener('click', () => {
+                    activeCat = el.dataset.cat; wikiSub = null; query = ''; searchEl.value = '';
+                    renderCats(); renderList();
+                }));
+        }
+
+        // Экран выбора внутри Википедии: две карточки — Лор и Геймплей
+        function renderWikiChoice() {
+            const subs = CATEGORIES.wiki.subs;
+            let html = '<div class="db-wiki-choice">';
+            for (const k in subs) {
+                const s = subs[k];
+                const cnt = entries.filter(e => e.category === 'wiki' && e.subcat === k).length;
+                html += `<div class="db-choice" data-sub="${k}">
+                    <div class="db-choice-name">${pick(s.name)}</div>
+                    <div class="db-choice-desc">${pick(s.desc)}</div>
+                    <div class="db-choice-cnt">${cnt} ${lang==='en'?'articles':'статей'}</div>
+                </div>`;
+            }
+            html += '</div>';
+            listEl.innerHTML = html;
+            listEl.querySelectorAll('.db-choice').forEach(el =>
+                el.addEventListener('click', () => { wikiSub = el.dataset.sub; renderList(); }));
         }
 
         function renderList() {
             detailEl.classList.remove('show');
             listEl.classList.remove('hide');
-            let items;
+
+            // Википедия без выбранного подраздела и без запроса → экран выбора Лор/Геймплей
+            if (activeCat === 'wiki' && !wikiSub && !query) { renderWikiChoice(); return; }
+
+            // Область (scope): для вики — текущий подраздел; поиск ограничен этой областью
+            let scope;
+            if (activeCat === 'wiki') {
+                scope = entries.filter(e => e.category === 'wiki' && (!wikiSub || e.subcat === wikiSub));
+            } else {
+                scope = entries.filter(e => e.category === activeCat);
+            }
+            let items = scope;
             if (query) {
                 const q = query.toLowerCase();
-                items = entries.filter(e => (pick(e.title)+' '+pick(e.snippet)).toLowerCase().includes(q));
-            } else {
-                items = entries.filter(e => e.category === activeCat);
+                items = scope.filter(e => (pick(e.title)+' '+pick(e.snippet)).toLowerCase().includes(q));
+            }
+
+            // Крошка "← Википедия · Лор" внутри подраздела
+            let crumb = '';
+            if (activeCat === 'wiki' && wikiSub) {
+                const sname = pick(CATEGORIES.wiki.subs[wikiSub].name);
+                crumb = `<div class="db-back" id="db-wiki-back">← ${lang==='en'?'Wiki':'Википедия'} · ${sname}</div>`;
             }
             const note = loadNote ? `<div class="db-note">${loadNote}</div>` : '';
-            if (!items.length) { listEl.innerHTML = note + `<div class="db-empty">${S.none}</div>`; return; }
-            listEl.innerHTML = note + items.map(e => {
-                const isCorp = e.category === 'corp';
-                const tag = isCorp ? `FILE #${e.file||'—'} · ${e.clearance||''}` : pick(CATEGORIES[e.category].name);
-                const imp = e.important ? `<span class="db-imp-badge">${S.important}</span>` : '';
-                return `<div class="db-art ${isCorp?'corp':''}" data-id="${e.id}">
-                    <div class="db-tag">${tag} ${imp}</div><h3>${pick(e.title)}</h3><p>${pick(e.snippet)}</p></div>`;
-            }).join('');
-            listEl.querySelectorAll('.db-art').forEach(el =>
-                el.addEventListener('click', () => openEntry(el.dataset.id)));
+
+            if (!items.length) {
+                const emptyMsg = (activeCat==='wiki' && wikiSub && !query)
+                    ? (lang==='en' ? 'No articles yet' : 'Пока нет статей')
+                    : S.none;
+                listEl.innerHTML = crumb + note + `<div class="db-empty">${emptyMsg}</div>`;
+            } else {
+                listEl.innerHTML = crumb + note + items.map(e => {
+                    const isCorp = e.category === 'corp';
+                    const tag = isCorp ? `FILE #${e.file||'—'} · ${e.clearance||''}` : pick(CATEGORIES[e.category].name);
+                    const imp = e.important ? `<span class="db-imp-badge">${S.important}</span>` : '';
+                    return `<div class="db-art ${isCorp?'corp':''}" data-id="${e.id}">
+                        <div class="db-tag">${tag} ${imp}</div><h3>${pick(e.title)}</h3><p>${pick(e.snippet)}</p></div>`;
+                }).join('');
+                listEl.querySelectorAll('.db-art').forEach(el =>
+                    el.addEventListener('click', () => openEntry(el.dataset.id)));
+            }
+
+            const backEl = document.getElementById('db-wiki-back');
+            if (backEl) backEl.addEventListener('click', () => { wikiSub = null; query = ''; searchEl.value = ''; renderList(); });
         }
 
         function renderArticle(e, html, fromMd) {

@@ -1288,6 +1288,28 @@ html::after {
 /* Разделитель между Регламентами и остальными разделами (вики/корпорации) */
 .db-cat-sep { height: 1px; background: rgba(255, 255, 255, 0.09); margin: 12px 8px; }
 
+/* Экран выбора внутри Википедии: две карточки Лор / Геймплей */
+.db-wiki-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.db-choice {
+    position: relative; overflow: hidden; cursor: pointer;
+    background: rgba(15, 15, 20, 0.6); border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    padding: 28px 26px;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.db-choice:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+.db-choice-name {
+    font-family: 'Uncage', sans-serif; font-size: 22px; color: #f2f4f6;
+    letter-spacing: 1px; margin-bottom: 10px;
+}
+.db-choice-desc { font-size: 13px; color: #8b93a0; line-height: 1.55; margin-bottom: 16px; }
+.db-choice-cnt { font-family: monospace; font-size: 11px; letter-spacing: 1px; color: #6c7480; }
+@media (max-width: 640px) { .db-wiki-choice { grid-template-columns: 1fr; } }
+
 /* Карточки списка (вики-скин) */
 .db-art {
     background: #16191e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 11px;

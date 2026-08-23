@@ -1396,8 +1396,11 @@ html::after {
 }
 
 /* ==== Оформление Markdown-контента статей ==== */
-/* Наименования блоков — акцентный янтарный, с крупным отступом сверху для отделения секций */
-.db-content h4 { color: #e3b866; font-size: 15px; margin: 34px 0 10px; letter-spacing: 0.5px; }
+/* Главный раздел («2. Owners») — целиком янтарный, крупный отступ сверху */
+.db-content h4 { color: #e3b866; font-size: 16px; margin: 34px 0 10px; letter-spacing: 0.5px; }
+/* Под-раздел («2.1. …») — текст обычный, янтарный только номер */
+.db-content h4.sub { color: #e7eaef; font-size: 14.5px; margin: 24px 0 7px; }
+.db-content h4.sub .db-num { color: #e3b866; }
 /* Заголовок документа — крупный, белый */
 .db-content h4:first-child {
     font-family: 'Uncage', sans-serif; font-size: 23px; letter-spacing: 1px;

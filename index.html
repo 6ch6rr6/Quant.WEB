@@ -1047,6 +1047,13 @@ General information, product information, band description, etc.">
             s = s.replace(/\*(.+?)\*/g,'<em>$1</em>');
             return s;
         }
+        // Заголовок: главный раздел (номер без точек внутри, напр. "2. …") → весь янтарный;
+        // под-раздел (номер с точкой, напр. "2.1. …") → янтарный только номер, текст обычный.
+        function headingHtml(raw){
+            const m = raw.match(/^(\d+(?:\.\d+)+)\.?\s+([\s\S]*)$/);
+            if (m) return '<h4 class="sub"><span class="db-num">'+m[1]+'.</span> '+inl(m[2])+'</h4>';
+            return '<h4>'+inl(raw)+'</h4>';
+        }
         function mdToHtml(md){
             const lines = md.replace(/\r/g,'').split('\n');
             const out = [];
@@ -1059,7 +1066,7 @@ General information, product information, band description, etc.">
                 } else {
                     const j = buf.join(' ').trim();
                     if (/^\*\*[^*].*\*\*$/.test(j) && (j.match(/\*\*/g)||[]).length === 2) {
-                        out.push('<h4>'+inl(j.replace(/^\*\*/,'').replace(/\*\*$/,''))+'</h4>');
+                        out.push(headingHtml(j.replace(/^\*\*/,'').replace(/\*\*$/,'')));
                     } else {
                         out.push('<p>'+inl(j)+'</p>');
                     }

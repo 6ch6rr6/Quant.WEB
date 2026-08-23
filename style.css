@@ -1654,11 +1654,17 @@ html::after {
     max-width: 1100px;              /* широкий документ */
     margin: 0 auto;                 /* по центру зоны */
 }
-/* На узких экранах — обычная колоночная раскладка, без выноса */
+/* На средних экранах — обычная раскладка в ряд, без выноса меню */
 @media (max-width: 1200px) {
     #wiki-page .db-layout { margin-left: 0; margin-right: 0; display: flex; }
     #wiki-page .db-side { position: static; width: 190px; }
     #wiki-page .db-main { max-width: none; margin: 0; }
+}
+/* На телефоне — в столбец: меню сверху, контент во всю ширину (карточки нормального размера) */
+@media (max-width: 768px) {
+    #wiki-page .db-layout { flex-direction: column; }
+    #wiki-page .db-side { width: 100%; }
+    #wiki-page .db-main { width: 100%; }
 }
 
 /* ==== База под общий стиль сайта (как карточки на главной) ==== */

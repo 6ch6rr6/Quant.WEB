@@ -83,8 +83,9 @@ html {
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 18px;
     padding: 15px 8%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     background: rgba(8, 8, 10, 0.8);
@@ -93,90 +94,257 @@ html {
     top: 0;
     z-index: 100;
 }
+.logo { flex: none; }
+.nav-collapse {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.nav-collapse .nav-cta { margin-right: 12px; }
+.nav-collapse .nav-links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+/* Бургер — скрыт на десктопе */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 34px;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin-left: auto;
+}
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #e4e7eb;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
 
 /* НАЗВАНИЕ СТУДИИ В МЕНЮ */
 .logo {
-    font-family: 'Goretax', sans-serif !important; 
-    font-size: 16.5px;
+    font-family: 'Supercharge', sans-serif !important;
+    font-size: 23px;
     font-weight: normal;
     color: #ffffff;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-/* КНОПКИ МЕНЮ (ИДЕАЛЬНОЕ УВЕЛИЧЕНИЕ ИЗ ЦЕНТРА НА ХОВЕРЕ) */
+/* КНОПКИ-ИКОНКИ НАВБАРА: hover-пилюля + свечение + тултип. Без scale —
+   поэтому нет ни дёрганья, ни съезда анчора, ни вылезания за край. */
 .nav-links .tab-btn {
-    background-color: transparent !important; 
-    border: none !important;                  
-    box-shadow: none !important;              
+    position: relative;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     padding: 0;
+    margin-left: 2px;
+    width: 38px;
+    height: 32px;
+    border-radius: 9px;
     cursor: pointer;
-    margin-left: 14px; 
-    
-    /* Базовый жесткий размер для всех состояний */
-    width: 25px !important;
-    height: 25px !important;
-    
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    /* ИДЕАЛЬНЫЙ АНЧОР-ПОИНТ ПО ЦЕНТРУ */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
-    transform-origin: center center !important; 
-    
-    /* По умолчанию размер оригинальный (25px) и иконки приглушены */
-    transform: scale(1) !important;
-    opacity: 0.5; 
+    transition: background 0.2s ease;
+    font-size: 0 !important;
+}
+/* Сама иконка (отдельный слой поверх пилюли) */
+.nav-links .tab-btn::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.55;
     filter: none;
-    
-    /* Плавная анимация изменения прозрачности, цвета и РАЗМЕРА из центра */
-    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), filter 0.25s ease;
-    
-    font-size: 0px !important; 
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+/* Ховер: мягкая пилюля + белая иконка со свечением */
+.nav-links .tab-btn:hover { background: rgba(255, 255, 255, 0.07) !important; }
+.nav-links .tab-btn:hover::before {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.45));
+}
+/* Активная вкладка: пилюля + белая иконка + подчёркивание снизу */
+.nav-links .tab-btn.active { background: rgba(255, 255, 255, 0.10) !important; }
+.nav-links .tab-btn.active::before {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
+}
+.nav-links .tab-btn.active .tab-tip { /* у активной подпись не липнет */ }
+.nav-links .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+/* Иконки по вкладкам (на псевдоэлемент) */
+.nav-links [data-tab="main-page"]::before   { background-image: url('images/home.png'); }
+.nav-links [data-tab="hiring-page"]::before  { background-image: url('images/hiring.png'); }
+.nav-links [data-tab="faq-page"]::before     { background-image: url('images/faq.png'); }
+.nav-links [data-tab="wiki-page"]::before    { background-image: url('images/wiki.png'); }
+.nav-links [data-tab="devs-page"]::before    { background-image: url('images/developers.png'); }
+.nav-links [data-tab="socials-page"]::before { background-image: url('images/socials.png'); }
+
+/* Тултип-подпись вкладки (появляется под кнопкой на ховере) */
+.nav-links .tab-btn .tab-tip {
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(18, 20, 26, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #dfe4ea;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    white-space: nowrap;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 200;
+}
+.nav-links .tab-btn:hover .tab-tip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
-/* ЭФФЕКТ ПРИ НАВЕДЕНИИ КУРСОРA (Иконка плавно увеличивается!) */
-.nav-links .tab-btn:hover {
-    opacity: 1 !important;
-    /* Плавно увеличиваем при наведении (scale 1.05 = ~26.3px) */
-    transform: scale(1.05) !important;
+/* Кнопки навбара слева (Discord + Играть) — общий каркас */
+.navbar .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 9px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.navbar .nav-cta:active { transform: translateY(0); }
 
-    /* Белая иконка + циановое неоновое свечение */
-    filter: brightness(0) invert(1)
-            drop-shadow(0 0 6px var(--accent-color)) !important;
+/* «Играть» — основная белая */
+.navbar .nav-cta.play { background: #ffffff; color: #14161a; }
+.navbar .nav-cta.play::before { content: '▶'; font-size: 10px; }
+.navbar .nav-cta.play:hover {
+    transform: translateY(-1px);
+    background: #eef1f4;
+    box-shadow: 0 6px 22px rgba(255, 255, 255, 0.2);
 }
 
-/* ВЫБРАННЫЙ РАЗДЕЛ / АКТИВНАЯ ИКОНКА (Становится еще больше — ровно 28px) */
-.nav-links .tab-btn.active {
-    opacity: 1 !important;
-    
-    /* Жестко фиксируем максимальное увеличение из центра: 25px * 1.12 = ровно 28px */
-    transform: scale(1.12) !important;
-
-    /* Белая иконка + циановое свечение (тот же стиль, что на ховере) */
-    filter: brightness(0) invert(1)
-            drop-shadow(0 0 6px var(--accent-color)) !important;
+/* Discord — вторичная (обводка), той же формы */
+.navbar .nav-cta.discord {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.navbar .nav-cta.discord::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: url('images/discord.png') center / contain no-repeat;
+    filter: brightness(0) invert(1);
+}
+.navbar .nav-cta.discord:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
-/* Перестраховка: если мы наводимся на УЖЕ АКТИВНУЮ иконку, она не должна уменьшаться */
-.nav-links .tab-btn.active:hover {
-    transform: scale(1.12) !important;
-}
-/* ПУТИ К ТВОИМ PNG КАРТИНКАМ */
-.nav-links [data-tab="main-page"] { background-image: url('images/home.png') !important; }
-.nav-links [data-tab="hiring-page"] { background-image: url('images/hiring.png') !important; }
-.nav-links [data-tab="faq-page"] { background-image: url('images/faq.png') !important; }
-.nav-links [data-tab="wiki-page"] { background-image: url('images/wiki.png') !important; }
-.nav-links [data-tab="devs-page"] { background-image: url('images/developers.png') !important; }
-.nav-links [data-tab="socials-page"] { background-image: url('images/socials.png') !important; }
+/* ==== МОБИЛЬНЫЙ НАВБАР: бургер + выпадающее меню ==== */
+@media (max-width: 768px) {
+    .nav-toggle { display: flex; }
 
-/* На всякий случай скрываем текст внутри span */
-.nav-links .tab-btn span {
-    display: none !important;
+    .nav-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px 8%;
+        background: rgba(10, 12, 16, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+    .navbar.open .nav-collapse { display: flex; }
+
+    /* Кнопки CTA — на всю ширину */
+    .nav-collapse .nav-cta {
+        width: 100%;
+        justify-content: center;
+        margin-right: 0;
+        padding: 12px;
+    }
+
+    /* Вкладки — вертикальным списком с подписями */
+    .nav-collapse .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        margin-left: 0;
+        gap: 2px;
+        width: 100%;
+    }
+    .nav-links .tab-btn {
+        width: 100%;
+        height: 46px;
+        justify-content: flex-start;
+        padding: 0 14px;
+        margin-left: 0;
+        border-radius: 9px;
+    }
+    .nav-links .tab-btn .tab-tip {
+        position: static;
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin-left: 12px;
+        color: #cfd3d8;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0.3px;
+    }
+    .nav-links .tab-btn.active { background: rgba(255, 255, 255, 0.08); }
+    .nav-links .tab-btn.active::after { display: none; }
+
+    .nav-links #lang-toggle-btn { margin-left: 0; align-self: flex-start; }
+
+    /* Бургер превращается в крестик */
+    .navbar.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .navbar.open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .navbar.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 }
 
 

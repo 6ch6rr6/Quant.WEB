@@ -6,9 +6,8 @@
 
     <!-- НАСТРОЙКА КРАСИВОГО ПРЕВЬЮ ПРИ ОТПРАВКЕ ССЫЛКИ -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Quant Studio">
-<meta property="og:description" content="Official website.
-General information, product information, band description, etc.">
+<meta property="og:title" content="QUANT-STUDIO — BLACKOUT">
+<meta property="og:description" content="Ограбления, блэкауты и живой открытый мир. Roblox action-horror от Quant-Studio.">
 <meta property="og:url" content="https://quant-web-two.vercel.app">
 
 <!-- Ссылка на картинку для превью (Рекомендуемый размер: 1200x630 пикселей) -->
@@ -18,9 +17,8 @@ General information, product information, band description, etc.">
 
 <!-- Дополнительные теги для отображения в Twitter/X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Quant Studio">
-<meta name="twitter:description" content="Official website.
-General information, product information, band description, etc.">
+<meta name="twitter:title" content="QUANT-STUDIO — BLACKOUT">
+<meta name="twitter:description" content="Ограбления, блэкауты и живой открытый мир. Roblox action-horror от Quant-Studio.">
 <meta name="twitter:image" content="https://quant-web-two.vercel.app/images/og-cover.png">
 
     <title>Quant-Studio</title>
@@ -50,31 +48,30 @@ General information, product information, band description, etc.">
         </div>
     </div>
     
-    <!-- Аудиоплеер для фоновой музыки -->
-    <audio id="bg-music" src="images/music.mp3" loop></audio>
-
-    <!-- Переключатель звука в левом верхнем углу -->
-    <div class="music-toggle-container">
-        <button id="music-btn" class="music-btn">
-            <span class="music-icon">🔇</span>
-            <span class="music-text" data-en="SOUND OFF">SOUND OFF</span>
-        </button>
-    </div>
 
 <!-- Шапка сайта с полным набором вкладок -->
 <header class="navbar">
-    <div class="logo">QUANT-STUDIO</div>
-    <nav class="nav-links">
-        <button class="tab-btn active" data-tab="main-page" data-en="Home"><span>Главная</span></button>
-        <button class="tab-btn" data-tab="hiring-page" data-en="Hiring"><span>Вакансии</span></button>
-        <button class="tab-btn" data-tab="faq-page" data-en="FAQ"><span>FAQ</span></button>
-        <button class="tab-btn" data-tab="wiki-page" data-en="Wiki"><span>Wiki</span></button>
-        <button class="tab-btn" data-tab="devs-page" data-en="Developers"><span>Разработчики</span></button>
-        <button class="tab-btn" data-tab="socials-page" data-en="Social Media"><span>Соцсети</span></button>
-        
-        <!-- Кнопка переключения языка -->
-        <button id="lang-toggle-btn" class="lang-btn">RU</button>
-    </nav>
+    <div class="logo">BLACKOUT</div>
+
+    <!-- Бургер (только на мобилке) -->
+    <button class="nav-toggle" id="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
+
+    <div class="nav-collapse" id="nav-collapse">
+        <a href="https://discord.gg/CZhffCMkxT" target="_blank" rel="noopener" class="nav-cta discord"><span data-en="Discord">Discord</span></a>
+        <a href="https://www.roblox.com/games/18913136198/BLACKOUT-P-A" target="_blank" rel="noopener" class="nav-cta play"><span data-en="Play">Играть</span></a>
+
+        <nav class="nav-links">
+            <button class="tab-btn active" data-tab="main-page"><span class="tab-tip" data-en="Home">Главная</span></button>
+            <button class="tab-btn" data-tab="hiring-page"><span class="tab-tip" data-en="Hiring">Вакансии</span></button>
+            <button class="tab-btn" data-tab="faq-page"><span class="tab-tip" data-en="FAQ">FAQ</span></button>
+            <button class="tab-btn" data-tab="wiki-page"><span class="tab-tip" data-en="Wiki">Вики</span></button>
+            <button class="tab-btn" data-tab="devs-page"><span class="tab-tip" data-en="Developers">Разработчики</span></button>
+            <button class="tab-btn" data-tab="socials-page"><span class="tab-tip" data-en="Social Media">Соцсети</span></button>
+
+            <!-- Кнопка переключения языка -->
+            <button id="lang-toggle-btn" class="lang-btn">RU</button>
+        </nav>
+    </div>
 </header>
 
 
@@ -806,37 +803,6 @@ General information, product information, band description, etc.">
         });
     </script>
     
-    <!-- Скрипт управления музыкой -->
-    <script>
-        const music = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-btn');
-        const musicIcon = musicBtn.querySelector('.music-icon');
-        const musicText = musicBtn.querySelector('.music-text');
-
-        // Громкость музыки (0.3 — это 30% громкости, чтобы не била по ушам)
-        music.volume = 0.3; 
-
-        musicBtn.addEventListener('click', () => {
-            if (music.paused) {
-                // Включаем музыку — иконку меняем только если проигрывание реально стартовало
-                music.play().then(() => {
-                    musicIcon.textContent = '🔊';
-                    musicText.textContent = 'SOUND ON';
-                    musicBtn.classList.add('playing');
-                }).catch((err) => {
-                    // Нет файла images/music.mp3 или автоплей заблокирован браузером
-                    console.warn('Не удалось воспроизвести музыку:', err);
-                });
-            } else {
-                // Выключаем музыку
-                music.pause();
-                musicIcon.textContent = '🔇';
-                musicText.textContent = 'SOUND OFF';
-                musicBtn.classList.remove('playing');
-            }
-        });
-    </script>
-    
         <!-- Холст для анимации песчаного ветра -->
     <canvas id="sand-wind"></canvas>
 
@@ -1226,6 +1192,19 @@ General information, product information, band description, etc.">
 
         renderCats();
         renderList();
+    })();
+    </script>
+
+    <!-- Бургер-меню (мобилка) -->
+    <script>
+    (function () {
+        const navbar = document.querySelector('.navbar');
+        const toggle = document.getElementById('nav-toggle');
+        if (!navbar || !toggle) return;
+        toggle.addEventListener('click', () => navbar.classList.toggle('open'));
+        // Закрываем меню после выбора вкладки/кнопки
+        navbar.querySelectorAll('.tab-btn, .nav-cta').forEach(el =>
+            el.addEventListener('click', () => navbar.classList.remove('open')));
     })();
     </script>
 

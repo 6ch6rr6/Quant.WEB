@@ -1,7 +1,7 @@
 [
   {
     "id": "ustav",
-    "category": "ustav",
+    "category": "docs",
     "important": true,
     "title": { "ru": "Устав стаффа", "en": "Staff Charter" },
     "snippet": {
@@ -12,7 +12,7 @@
   },
   {
     "id": "rules-game",
-    "category": "rules",
+    "category": "docs",
     "important": true,
     "title": { "ru": "Правила внутри игры", "en": "In-Game Rules" },
     "snippet": {
@@ -23,7 +23,8 @@
   },
   {
     "id": "reports-appeals",
-    "category": "rules",
+    "category": "docs",
+    "important": true,
     "title": { "ru": "Репорты и апелляции", "en": "Reports and Appeals" },
     "snippet": {
       "ru": "Как сообщить о нарушителе и как оспорить бан.",
@@ -33,7 +34,8 @@
   },
   {
     "id": "support",
-    "category": "rules",
+    "category": "docs",
+    "important": true,
     "title": { "ru": "Регламент поддержки", "en": "Support Regulation" },
     "snippet": {
       "ru": "С чем можно и с чем нельзя обращаться в поддержку.",

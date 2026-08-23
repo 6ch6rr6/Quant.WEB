@@ -2,20 +2,22 @@
    GLOBAL THEME VARIABLES (АКЦЕНТНЫЙ ЦВЕТ ТУТ)
    ======================================================== */
 :root {
-    /* Основной насыщенный малиново-красный неон */
-    --accent-color: #e11d48; 
-    
-    /* Автоматические оттенки для свечений, баджей и ховеров */
-    --accent-glow: rgba(225, 29, 72, 0.08);
-    --accent-hover-border: rgba(225, 29, 72, 0.3);
-    --accent-badge-bg: rgba(225, 29, 72, 0.1);
-    --accent-badge-border: rgba(225, 29, 72, 0.2);
+    /* Монохром: акцент = почти белый (весь цвет несут скриншоты) */
+    --accent-color: #eef1f4;
+
+    /* Приглушённые белые оттенки для свечений, баджей и ховеров */
+    --accent-glow: rgba(255, 255, 255, 0.05);
+    --accent-hover-border: rgba(255, 255, 255, 0.22);
+    --accent-badge-bg: rgba(255, 255, 255, 0.06);
+    --accent-badge-border: rgba(255, 255, 255, 0.14);
 }
 
 /* 1. РЕГИСТРИРУЕМ ШРИФТЫ */
 @font-face {
     font-family: 'Uncage';
-    src: url('images/Uncage.ttf') format('truetype');
+    /* Файла Uncage.ttf в папке нет — используем существующий Bowler.ttf.
+       Чтобы взять другой шрифт, поменяй имя файла ниже (есть Bowler.ttf / Gewtymol.ttf). */
+    src: url('images/Bowler.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -134,10 +136,10 @@ html {
 .nav-links .tab-btn:hover {
     opacity: 1 !important;
     /* Плавно увеличиваем при наведении (scale 1.05 = ~26.3px) */
-    transform: scale(1.05) !important; 
-    
-    /* МАТЕМАТИЧЕСКИ ТОЧНЫЙ ФИЛЬТР ПОД ЦВЕТ #e11d48 + НЕОНОВОЕ СВЕЧЕНИЕ */
-    filter: brightness(0) invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
+    transform: scale(1.05) !important;
+
+    /* Белая иконка + циановое неоновое свечение */
+    filter: brightness(0) invert(1)
             drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
@@ -146,10 +148,10 @@ html {
     opacity: 1 !important;
     
     /* Жестко фиксируем максимальное увеличение из центра: 25px * 1.12 = ровно 28px */
-    transform: scale(1.12) !important; 
-    
-    /* Тот же точный малиновый фильтр, чтобы цвет не слетал */
-    filter: brightness(0) invert(20%) sepia(96%) saturate(4354%) hue-rotate(336deg) brightness(91%) contrast(92%)
+    transform: scale(1.12) !important;
+
+    /* Белая иконка + циановое свечение (тот же стиль, что на ховере) */
+    filter: brightness(0) invert(1)
             drop-shadow(0 0 6px var(--accent-color)) !important;
 }
 
@@ -308,8 +310,9 @@ html {
     max-width: 900px;
     margin: 40px auto 0 auto;
     padding: 0 20px;
-    transform: scale(0.70); 
-    transform-origin: top center;
+    /* zoom сжимает контент И его место в раскладке — не оставляет пустого «хвоста» снизу,
+       в отличие от transform: scale, который резервировал исходную высоту. */
+    zoom: 0.70;
 }
 
 /* ЭФФЕКТ КАРТОЧЕК С ПОДДЕРЖКОЙ ИНТЕРАКТИВНОГО 3D */
@@ -437,8 +440,8 @@ h1 {
     margin-bottom: 18px; 
 }
 
-.can-do h3 { color: #10b981; } /* Оставляем зеленый для CAN DO */
-.basic-card h3 { color: #3b82f6; } /* Оставляем синий для базовых карточек */
+.can-do h3 { color: #f2f4f6; } /* Монохром: почти белый */
+.basic-card h3 { color: #f2f4f6; } /* Монохром: почти белый */
 
 .skills-card ul { list-style: none; }
 .skills-card li {
@@ -468,9 +471,9 @@ h1 {
 .hiring-header h3 { font-size: 18px !important; color: #ffffff; margin-bottom: 0; }
 
 .salary-badge {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: #f87171;
+    background: rgba(148, 163, 184, 0.1);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #94a3b8;
     font-size: 11px;
     font-weight: 700;
     padding: 5px 12px;
@@ -763,7 +766,7 @@ body {
 .lang-btn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    box-shadow: 0 0 12px rgba(255, 0, 0, 0.2); /* Легкое неоновое свечение */
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.15); /* Легкое свечение */
     transform: translateY(-1px);
 }
 
@@ -787,9 +790,12 @@ body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.55) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(0, 0, 0, 0.55) 1px, transparent 1px);
     background-size: 2px 2px;
-    
+
     /* Легкая тонировка поверх, чтобы окончательно усмирить яркость */
     background-color: rgba(0, 0, 0, 0.25);
+
+    /* Виньетка: мягкое затемнение краёв экрана */
+    box-shadow: inset 0 0 190px 30px rgba(0, 0, 0, 0.85);
 }
 
 /* Скрытие и показ вкладок */
@@ -844,4 +850,578 @@ body {
     transform: scale(1.1); /* Легкое увеличение */
     /* Убираем белый фильтр и красим иконку в малиновый цвет (подгонка под --accent-color) */
     filter: sepia(100%) saturate(6281%) hue-rotate(347deg) brightness(91%) contrast(108%);
+}
+
+/* ========================================================
+   НОВЫЙ ДЕКОР: СВЕЧЕНИЯ, СЧЁТЧИКИ, АНИМАЦИЯ ПОЯВЛЕНИЯ
+   ======================================================== */
+
+/* Мягкий неоновый отсвет вверху страницы (за шапкой/героем) */
+body::before {
+    content: '';
+    position: fixed;
+    top: -220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 520px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: -50;
+}
+
+/* Плёночное зерно поверх фона (ровная текстура, без полос) */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -38;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Подводные лучи (каустика) — только в центральной зоне, к краям гаснут,
+   чтобы не пачкать пустые поля. Ниже зерна и частиц. */
+html::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -39;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(80deg,
+            transparent 0, transparent 150px,
+            rgba(200, 214, 232, 0.035) 176px, rgba(200, 214, 232, 0.035) 180px,
+            transparent 210px),
+        repeating-linear-gradient(84deg,
+            transparent 0, transparent 240px,
+            rgba(180, 196, 218, 0.022) 268px, transparent 320px);
+    background-size: 300px 100%, 520px 100%;
+    animation: caustics 26s linear infinite;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
+}
+@keyframes caustics {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 300px 0, -520px 0; }
+}
+
+/* Боковые HUD-рельсы в пустых полях по краям */
+.hud-rails {
+    position: fixed;
+    inset: 0;
+    z-index: -30;
+    pointer-events: none;
+}
+.hud-rail {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 130px;
+    font-family: monospace;
+}
+.hud-rail.left  { left: 42px; }
+.hud-rail.right { right: 42px; }
+.hud-line {
+    position: absolute;
+    top: 9%;
+    bottom: 9%;
+    width: 1px;
+    background: rgba(160, 175, 200, 0.16);
+}
+.hud-rail.left  .hud-line { left: 0; }
+.hud-rail.right .hud-line { right: 0; }
+/* Засечки на линии */
+.hud-line::before,
+.hud-line::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 1px;
+    background: rgba(160, 175, 200, 0.30);
+}
+.hud-rail.left  .hud-line::before { left: 0; top: 24%; }
+.hud-rail.left  .hud-line::after  { left: 0; top: 68%; }
+.hud-rail.right .hud-line::before { right: 0; top: 32%; }
+.hud-rail.right .hud-line::after  { right: 0; top: 76%; }
+/* Вертикальная подпись */
+.hud-vtext {
+    position: absolute;
+    writing-mode: vertical-rl;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(150, 165, 190, 0.4);
+}
+.hud-rail.left  .hud-vtext { left: 7px; top: 22%; }
+.hud-rail.right .hud-vtext { right: 7px; top: 26%; transform: rotate(180deg); }
+/* Мелкие координаты-тики */
+.hud-tick {
+    position: absolute;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: rgba(140, 155, 180, 0.32);
+    white-space: nowrap;
+}
+.hud-rail.left  .hud-tick.t1 { left: 14px; top: 18%; }
+.hud-rail.left  .hud-tick.t2 { left: 14px; top: 74%; }
+.hud-rail.right .hud-tick.t3 { right: 14px; top: 40%; }
+.hud-rail.right .hud-tick.t4 { right: 14px; top: 62%; }
+/* Прячем рельсы, когда полей по бокам мало */
+@media (max-width: 1100px) {
+    .hud-rails { display: none; }
+}
+
+
+/* Неоновая линия-градиент под навбаром */
+.navbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    opacity: 0.55;
+    box-shadow: 0 0 12px var(--accent-color);
+    pointer-events: none;
+}
+
+/* Строка крупных неоновых счётчиков */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 5px 0 30px 0;
+}
+.stat {
+    background: rgba(15, 15, 20, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 22px 12px;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s ease;
+}
+.stat:hover {
+    border-color: var(--accent-hover-border);
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-3px);
+}
+.stat-num {
+    display: block;
+    font-family: 'Uncage', sans-serif;
+    font-size: 26px;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.25);
+}
+.stat-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #a1a1aa;
+}
+@media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Появление элементов при скролле (класс навешивается из JS) */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ========================================================
+   ЗИГЗАГ-СЕКЦИЯ КАДРОВ (скриншот + текст, змейкой)
+   ======================================================== */
+.zz-flow {
+    margin: 25px 0 20px 0;
+}
+.zz-row {
+    position: relative;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    padding: 38px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.zz-row:last-child {
+    border-bottom: none;
+}
+.zz-row.rev {
+    flex-direction: row-reverse;
+}
+/* Крупный "призрачный" номер СБОКУ от фото (по центру по высоте) */
+.zz-ghost {
+    position: absolute;
+    top: 50%;
+    left: -150px;
+    transform: translateY(-50%);
+    z-index: 0;
+    font-family: 'Uncage', sans-serif;
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+}
+.zz-row.rev .zz-ghost {
+    left: auto;
+    right: -210px;
+}
+.zz-row:not(.rev) .zz-ghost {
+    left: -210px;
+}
+/* Скриншот — единственный источник цвета на странице */
+.zz-shot {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    width: 47%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    display: block;
+    background: #0c0f13;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+}
+.zz-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.zz-shot:hover img {
+    transform: scale(1.05);
+}
+.zz-tag {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-family: monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #e7ebf0;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+}
+.zz-text {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+.zz-k {
+    color: #9aa6b8;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.zz-text h3 {
+    color: #f2f4f6;
+    font-size: 26px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-family: 'Uncage', sans-serif;
+}
+.zz-text p {
+    color: #98a0aa;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 400px;
+}
+.zz-chips {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+.zz-chip {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #aeb4bc;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 5px 11px;
+}
+@media (max-width: 640px) {
+    .zz-row, .zz-row.rev {
+        flex-direction: column;
+        gap: 18px;
+    }
+    .zz-shot {
+        width: 100%;
+    }
+    .zz-text p {
+        max-width: none;
+    }
+    .zz-ghost {
+        display: none;
+    }
+}
+
+/* ========================================================
+   IDLE-АНИМАЦИЯ КАРТОЧЕК (живой 3D-дрейф в пространстве)
+   ======================================================== */
+/* Плавный крен + парение — как авто-версия наклона за мышью */
+@keyframes cardIdle {
+    0%   { transform: perspective(1000px) rotateX(0.7deg)  rotateY(-1.4deg) translateY(-2px); }
+    30%  { transform: perspective(1000px) rotateX(-1deg)   rotateY(1.1deg)  translateY(-8px); }
+    60%  { transform: perspective(1000px) rotateX(1.1deg)  rotateY(1.5deg)  translateY(-4px); }
+    100% { transform: perspective(1000px) rotateX(0.7deg)  rotateY(-1.4deg) translateY(-2px); }
+}
+/* Плоские плитки/скрины: парение + лёгкое "дыхание" масштабом */
+@keyframes tileIdle {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-8px) scale(1.018); }
+}
+
+/* Крупные карточки: idle-дрейф и наклон за мышью управляются из JS
+   (ради плавного перехода между покоем и ховером). Тут — только FAQ-исключение. */
+.faq-item { animation: none !important; }
+
+/* Плитки статов */
+.stat { animation: tileIdle 5.5s ease-in-out infinite; }
+.stat:nth-child(2) { animation-delay: -1.3s; }
+.stat:nth-child(3) { animation-delay: -2.6s; }
+.stat:nth-child(4) { animation-delay: -3.9s; }
+.stat:hover { animation: none; }
+
+/* Скриншоты зигзага */
+.zz-shot { animation: tileIdle 6.5s ease-in-out infinite; }
+.zz-row:nth-child(2) .zz-shot { animation-delay: -1.6s; }
+.zz-row:nth-child(3) .zz-shot { animation-delay: -3.2s; }
+.zz-row:nth-child(4) .zz-shot { animation-delay: -2.2s; }
+.zz-row:nth-child(5) .zz-shot { animation-delay: -4.0s; }
+
+/* Мягкие дрейфующие пятна акцентного цвета в покое */
+.profile-card, .skills-card { position: relative; }
+.profile-card::after, .skills-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: screen;
+    /* Пятна видны в покое; opacity — обычное свойство, поэтому плавно гаснет по transition */
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    background:
+        radial-gradient(circle at 25% 30%, rgba(238, 241, 244, 0.14), transparent 38%),
+        radial-gradient(circle at 78% 65%, rgba(238, 241, 244, 0.10), transparent 42%),
+        radial-gradient(circle at 55% 88%, rgba(238, 241, 244, 0.08), transparent 40%);
+    background-size: 200% 200%;
+    /* Анимируем ТОЛЬКО положение пятен — так пятна вплывают/выплывают, а opacity остаётся управляемым */
+    animation: cardGlow 13s ease-in-out infinite;
+}
+.skills-card:nth-of-type(even)::after { animation-delay: -6s; animation-duration: 11s; }
+.skills-grid .skills-card:nth-child(2)::after { animation-delay: -4s; }
+@keyframes cardGlow {
+    0%   { background-position: 0% 20%; }
+    50%  { background-position: 80% 70%; }
+    100% { background-position: 0% 20%; }
+}
+/* На наведении пятна ПЛАВНО гаснут (перед заливкой рамки акцентом) */
+.profile-card:hover::after, .skills-card:hover::after { opacity: 0; }
+/* FAQ — никаких пятен */
+.faq-item::after { content: none; }
+
+/* Уважаем системную настройку "меньше движения" */
+@media (prefers-reduced-motion: reduce) {
+    .profile-card, .skills-card, .stat, .zz-shot { animation: none; }
+    .profile-card::after, .skills-card::after { animation: none; opacity: 0; }
+}
+
+/* ========================================================
+   БАЗА ДАННЫХ (вкладка WIKI)
+   ======================================================== */
+.db-root { margin-top: 22px; }
+.db-topbar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.db-search {
+    flex: 1;
+    background: #16191e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    padding: 11px 14px;
+    color: #dfe3e8;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.db-search::placeholder { color: #6c7480; }
+.db-search:focus { border-color: rgba(255, 255, 255, 0.25); }
+.db-sync {
+    display: flex; align-items: center; gap: 7px;
+    font-family: monospace; font-size: 10px; letter-spacing: 1px; color: #8b93a0;
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 6px 12px; white-space: nowrap;
+}
+.db-dot { width: 7px; height: 7px; border-radius: 50%; background: #7fdc8a; box-shadow: 0 0 8px #7fdc8a; animation: dbPulse 2.4s ease-in-out infinite; }
+@keyframes dbPulse {
+    0%, 100% { opacity: 1;    transform: scale(1);    box-shadow: 0 0 8px rgba(127, 220, 138, 0.9); }
+    50%      { opacity: 0.45; transform: scale(0.82); box-shadow: 0 0 3px rgba(127, 220, 138, 0.4); }
+}
+
+.db-layout { display: flex; gap: 22px; align-items: flex-start; }
+.db-side { width: 200px; flex: none; }
+.db-main { flex: 1; min-width: 0; }
+
+.db-cat {
+    font-size: 13px; color: #b5bcc5; padding: 9px 12px; border-radius: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 4px; cursor: pointer; transition: background 0.18s, color 0.18s;
+}
+.db-cat:hover { background: rgba(255, 255, 255, 0.04); color: #e7eaef; }
+.db-cat.on { background: rgba(255, 255, 255, 0.07); color: #fff; }
+.db-cat b { color: #6c7480; font-weight: 400; font-family: monospace; font-size: 11px; }
+.db-cat.lock { color: #c79b4a; } .db-cat.lock b { color: #8a6d2e; }
+
+/* Карточки списка (вики-скин) */
+.db-art {
+    background: #16191e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 11px;
+    padding: 16px 18px; margin-bottom: 12px; cursor: pointer;
+    transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+}
+.db-art:hover { border-color: rgba(255, 255, 255, 0.22); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
+.db-art .db-tag { font-size: 9px; letter-spacing: 1px; color: #8b93a0; text-transform: uppercase; margin-bottom: 7px; }
+.db-art h3 { font-size: 16px; color: #f0f2f4; margin-bottom: 6px; letter-spacing: 0.4px; }
+.db-art p { font-size: 12.5px; color: #8b93a0; line-height: 1.55; }
+
+/* Корпорации — мини-досье в списке */
+.db-art.corp {
+    background: #161206; border-color: rgba(245, 166, 35, 0.28);
+    background-image: radial-gradient(rgba(245, 166, 35, 0.05) 1px, transparent 1px); background-size: 14px 14px;
+}
+.db-art.corp .db-tag { color: #f5a623; }
+.db-art.corp h3 { color: #efe6d0; font-family: monospace; letter-spacing: 1px; }
+.db-art.corp p { color: #b7ac90; font-family: monospace; }
+.db-red { background: #000; color: #000; border-radius: 2px; padding: 0 2px; user-select: none; }
+
+.db-empty { color: #6c7480; font-size: 13px; padding: 30px 4px; text-align: center; }
+
+/* Детальный просмотр */
+.db-detail { display: none; }
+.db-detail.show { display: block; }
+.db-list.hide { display: none; }
+.db-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: #9aa0a8; font-size: 12px; letter-spacing: 1px; cursor: pointer; margin-bottom: 16px; transition: color 0.2s;
+}
+.db-back:hover { color: #fff; }
+.db-article { background: #16191e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 28px 30px; }
+.db-article .db-tag { font-size: 10px; letter-spacing: 2px; color: #8b93a0; text-transform: uppercase; margin-bottom: 12px; }
+.db-article h2 { font-family: 'Uncage', sans-serif; font-size: 26px; color: #fff; letter-spacing: 1px; margin-bottom: 18px; }
+.db-content { color: #c3cbd3; font-size: 14.5px; line-height: 1.75; }
+.db-content p { margin-bottom: 14px; }
+.db-content h4 { color: #fff; font-size: 15px; margin: 20px 0 8px; letter-spacing: 0.5px; }
+
+/* Детальное досье (корпорации) */
+.db-article.dossier {
+    background: #161206; border-color: rgba(245, 166, 35, 0.3); position: relative; overflow: hidden;
+    background-image: radial-gradient(rgba(245, 166, 35, 0.05) 1px, transparent 1px); background-size: 16px 16px;
+}
+.db-article.dossier .db-cf { font-family: monospace; font-size: 10px; letter-spacing: 2px; color: #f5a623; margin-bottom: 14px; }
+.db-article.dossier h2 { font-family: monospace; color: #efe6d0; }
+.db-article.dossier .db-content { font-family: monospace; color: #b7ac90; }
+.db-article.dossier .db-content h4 { color: #f5a623; }
+.db-stamp {
+    position: absolute; top: 22px; right: 26px; transform: rotate(-11deg); color: #c8402f;
+    border: 2px solid #c8402f; border-radius: 5px; padding: 3px 12px;
+    font-size: 15px; font-weight: 900; letter-spacing: 2px; font-family: monospace; opacity: 0.85;
+}
+
+@media (max-width: 720px) {
+    .db-layout { flex-direction: column; }
+    .db-side { width: 100%; display: flex; flex-wrap: wrap; gap: 6px; }
+    .db-cat { flex: 1 1 auto; }
+}
+
+/* ==== Оживление базы (без idle-сдвига карточек) ==== */
+/* Карточки списка мягко проявляются по очереди при отрисовке */
+.db-art { position: relative; overflow: hidden; animation: dbFadeIn 0.45s ease both; }
+@keyframes dbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.db-art:nth-child(1) { animation-delay: 0.03s; }
+.db-art:nth-child(2) { animation-delay: 0.08s; }
+.db-art:nth-child(3) { animation-delay: 0.13s; }
+.db-art:nth-child(4) { animation-delay: 0.18s; }
+.db-art:nth-child(5) { animation-delay: 0.23s; }
+.db-art:nth-child(6) { animation-delay: 0.28s; }
+.db-art:nth-child(7) { animation-delay: 0.33s; }
+.db-art:nth-child(8) { animation-delay: 0.38s; }
+
+/* Блик-проводка при наведении — карточка стоит на месте, по ней проходит свет */
+.db-art::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -60%;
+    width: 55%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    transition: left 0.6s ease;
+    z-index: 1;
+}
+.db-art:hover::before { left: 120%; }
+.db-art.corp::before { background: linear-gradient(100deg, transparent, rgba(245, 166, 35, 0.10), transparent); }
+
+/* Плавное появление открытой статьи/досье */
+.db-detail.show .db-article { animation: dbUp 0.4s ease both; }
+@keyframes dbUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Мягкая подсветка поля поиска */
+.db-search:focus { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05); }
+
+/* Плавный акцентный маркер активной категории */
+.db-cat { position: relative; }
+.db-cat.on::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 22%; bottom: 22%;
+    width: 2px; border-radius: 2px;
+    background: var(--accent-color, #eef1f4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .db-art, .db-detail.show .db-article, .db-dot { animation: none; }
+    .db-art::before { display: none; }
+}
+
+/* ==== Оформление Markdown-контента статей ==== */
+.db-content h4 { color: #ffffff; font-size: 15px; margin: 20px 0 8px; letter-spacing: 0.5px; }
+.db-content h4:first-child {
+    font-family: 'Uncage', sans-serif; font-size: 22px; letter-spacing: 1px; margin: 0 0 6px;
+}
+.db-content blockquote {
+    border-left: 2px solid rgba(255, 255, 255, 0.18);
+    margin: 14px 0; padding: 8px 0 8px 16px;
+    color: #9aa4af; font-size: 13.5px; line-height: 1.7;
+}
+.db-content strong { color: #e7eaef; font-weight: 700; }
+.db-content em { color: #aab2bd; font-style: italic; }
+.db-article.dossier .db-content h4:first-child { font-family: monospace; color: #efe6d0; }
+.db-article.dossier .db-content blockquote { border-left-color: rgba(245, 166, 35, 0.35); color: #b7ac90; }
+
+/* Пометка "важно к прочтению" */
+.db-imp { color: #ffcf4d; font-weight: 900; margin-left: 5px; }
+.db-imp-badge {
+    display: inline-block; font-size: 8px; font-weight: 800; letter-spacing: 1px; color: #ffcf4d;
+    border: 1px solid rgba(255, 207, 77, 0.4); background: rgba(255, 207, 77, 0.08);
+    border-radius: 5px; padding: 2px 6px; vertical-align: middle; margin-left: 6px;
+}
+
+/* Сообщение о загрузке документов через сервер */
+.db-note {
+    background: rgba(255, 207, 77, 0.06); border: 1px solid rgba(255, 207, 77, 0.25);
+    color: #d9c48a; font-size: 12px; line-height: 1.5; border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 14px;
 }

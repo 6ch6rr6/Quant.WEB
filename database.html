@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACKOUT — База данных</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<style>
+  @font-face { font-family:'Uncage'; src:url('images/Uncage.ttf') format('truetype'); }
+  @font-face { font-family:'Goretax'; src:url('images/Goretax.ttf') format('truetype'); }
+
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
+  :root { --accent:#eef1f4; --amber:#f5a623; }
+  html { scrollbar-width:none; } html::-webkit-scrollbar{ display:none; }
+  body {
+    background:#0d0f12; color:#cfd3d8; min-height:100vh; padding-bottom:60px;
+    background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+    background-size:44px 44px; background-attachment:fixed;
+  }
+  .mono, .mono * { font-family:'Courier New',monospace; }
+
+  /* Навбар */
+  .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 6%;
+    border-bottom:1px solid rgba(255,255,255,0.06); background:rgba(13,15,18,0.85); backdrop-filter:blur(10px);
+    position:sticky; top:0; z-index:50; }
+  .nav::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:.4; }
+  .nav .lg { font-family:'Goretax',sans-serif; font-size:16px; letter-spacing:1px; color:#fff; text-transform:uppercase; }
+  .nav a.back { color:#9aa0a8; text-decoration:none; font-size:12px; letter-spacing:1px; border:1px solid rgba(255,255,255,0.14);
+    border-radius:8px; padding:7px 14px; transition:all .2s; }
+  .nav a.back:hover { color:#fff; border-color:var(--accent); }
+
+  .wrap { max-width:1000px; margin:0 auto; padding:0 6%; }
+
+  /* Заголовок базы */
+  .dbhead { display:flex; align-items:center; gap:14px; margin:30px 0 18px; }
+  .dbhead .n { font-size:11px; color:#8b93a0; font-family:'Courier New',monospace; }
+  .dbhead h1 { font-family:'Uncage','Segoe UI',sans-serif; font-size:26px; color:#fff; letter-spacing:2px; }
+  .sync { margin-left:auto; display:flex; align-items:center; gap:7px; font-size:10px; letter-spacing:1px; color:#8b93a0;
+    font-family:'Courier New',monospace; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 12px; }
+  .sync .d { width:7px; height:7px; border-radius:50%; background:#7fdc8a; box-shadow:0 0 8px #7fdc8a; animation:bl 1.6s steps(1) infinite; }
+  @keyframes bl { 0%,60%{opacity:1;} 61%,100%{opacity:.3;} }
+
+  /* Раскладка */
+  .layout { display:flex; gap:22px; align-items:flex-start; }
+  .side { width:190px; flex:none; position:sticky; top:78px; }
+  .search { width:100%; background:#16191e; border:1px solid rgba(255,255,255,0.08); border-radius:9px;
+    padding:10px 12px; color:#dfe3e8; font-size:12px; margin-bottom:16px; outline:none; }
+  .search::placeholder { color:#6c7480; }
+  .search:focus { border-color:rgba(255,255,255,0.25); }
+  .cat { font-size:13px; color:#b5bcc5; padding:9px 12px; border-radius:8px; display:flex; justify-content:space-between;
+    align-items:center; margin-bottom:4px; cursor:pointer; transition:background .18s, color .18s; }
+  .cat:hover { background:rgba(255,255,255,0.04); color:#e7eaef; }
+  .cat.on { background:rgba(255,255,255,0.07); color:#fff; }
+  .cat b { color:#6c7480; font-weight:400; font-family:'Courier New',monospace; font-size:11px; }
+  .cat.lock { color:#c79b4a; } .cat.lock b { color:#8a6d2e; }
+
+  .main { flex:1; min-width:0; }
+
+  /* Карточки списка (вики-скин) */
+  .art { background:#16191e; border:1px solid rgba(255,255,255,0.06); border-radius:11px; padding:16px 18px;
+    margin-bottom:12px; cursor:pointer; transition:border-color .22s, transform .22s, box-shadow .22s; }
+  .art:hover { border-color:rgba(255,255,255,0.22); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+  .art .tag { font-size:9px; letter-spacing:1px; color:#8b93a0; text-transform:uppercase; margin-bottom:7px; }
+  .art h3 { font-size:16px; color:#f0f2f4; margin-bottom:6px; letter-spacing:.4px; }
+  .art p { font-size:12.5px; color:#8b93a0; line-height:1.55; }
+
+  /* Карточка корпорации в списке (мини-досье) */
+  .art.corp { background:#161206; border-color:rgba(245,166,35,0.28); background-image:radial-gradient(rgba(245,166,35,.05) 1px,transparent 1px); background-size:14px 14px; }
+  .art.corp .tag { color:var(--amber); }
+  .art.corp h3 { color:#efe6d0; font-family:'Courier New',monospace; letter-spacing:1px; }
+  .art.corp p { color:#b7ac90; font-family:'Courier New',monospace; }
+  .red { background:#000; color:#000; border-radius:2px; padding:0 2px; user-select:none; }
+
+  .empty { color:#6c7480; font-size:13px; padding:30px 4px; text-align:center; }
+
+  /* Детальный просмотр */
+  .detail { display:none; }
+  .detail.show { display:block; }
+  .list.hide { display:none; }
+  .backlink { display:inline-flex; align-items:center; gap:7px; color:#9aa0a8; font-size:12px; letter-spacing:1px;
+    cursor:pointer; margin-bottom:16px; transition:color .2s; }
+  .backlink:hover { color:#fff; }
+  .article { background:#16191e; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:28px 30px; }
+  .article .tag { font-size:10px; letter-spacing:2px; color:#8b93a0; text-transform:uppercase; margin-bottom:12px; }
+  .article h2 { font-family:'Uncage','Segoe UI',sans-serif; font-size:26px; color:#fff; letter-spacing:1px; margin-bottom:18px; }
+  .article .content { color:#c3cbd3; font-size:14.5px; line-height:1.75; }
+  .article .content p { margin-bottom:14px; }
+  .article .content h4 { color:#fff; font-size:15px; margin:20px 0 8px; letter-spacing:.5px; }
+
+  /* Детальное досье (корпорации) */
+  .article.dossier { background:#161206; border-color:rgba(245,166,35,0.3); position:relative; overflow:hidden;
+    background-image:radial-gradient(rgba(245,166,35,.05) 1px,transparent 1px); background-size:16px 16px; }
+  .article.dossier .cf { font-family:'Courier New',monospace; font-size:10px; letter-spacing:2px; color:var(--amber); margin-bottom:14px; }
+  .article.dossier h2 { font-family:'Courier New',monospace; color:#efe6d0; }
+  .article.dossier .content { font-family:'Courier New',monospace; color:#b7ac90; }
+  .article.dossier .content h4 { color:var(--amber); }
+  .article.dossier .stamp { position:absolute; top:22px; right:26px; transform:rotate(-11deg); color:#c8402f;
+    border:2px solid #c8402f; border-radius:5px; padding:3px 12px; font-size:15px; font-weight:900; letter-spacing:2px;
+    font-family:'Courier New',monospace; opacity:.85; }
+
+  @media (max-width:720px) {
+    .layout { flex-direction:column; }
+    .side { width:100%; position:static; display:flex; flex-wrap:wrap; gap:6px; }
+    .search { flex-basis:100%; }
+    .cat { flex:1 1 auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="lg">QUANT-STUDIO</div>
+    <a class="back" href="index.html">← На главную</a>
+  </div>
+
+  <div class="wrap">
+    <div class="dbhead">
+      <span class="n mono">DB</span>
+      <h1>БАЗА ДАННЫХ</h1>
+      <span class="sync mono"><span class="d"></span>SYNC · ROBLOX</span>
+    </div>
+
+    <div class="layout">
+      <aside class="side">
+        <input type="text" class="search" id="search" placeholder="Поиск по базе…">
+        <div id="cats"></div>
+      </aside>
+
+      <div class="main">
+        <div class="list" id="list"></div>
+        <div class="detail" id="detail"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ================================================================
+  //  ДАННЫЕ БАЗЫ  (позже вынесем в data/database.json — Roblox читает тот же файл)
+  //  Схема записи: { id, category, title, snippet, content, [classified, clearance, file] }
+  // ================================================================
+  const CATEGORIES = {
+    ustav: { name: 'Уставы' },
+    rules: { name: 'Правила игры' },
+    wiki:  { name: 'Википедия' },
+    corp:  { name: 'Корпорации', lock: true }
+  };
+
+  const ENTRIES = [
+    {
+      id: 'ustav-1', category: 'ustav', title: 'Общие положения',
+      snippet: 'Базовые правила поведения, структура фракций и общие принципы взаимодействия игроков.',
+      content: `<p>Настоящий устав описывает основные принципы взаимодействия внутри мира BLACKOUT.</p>
+        <h4>1. Основы</h4><p>Каждый игрок обязан соблюдать правила фракции, к которой присоединился.</p>
+        <h4>2. Взаимодействие</h4><p>Конфликты решаются игровыми механиками, а не эксплойтами.</p>`
+    },
+    {
+      id: 'rules-1', category: 'rules', title: 'Система розыска и репутации',
+      snippet: 'Как работает уровень розыска, за что он растёт, как его снизить и что теряет игрок при аресте.',
+      content: `<p>Уровень розыска отражает внимание властей к игроку.</p>
+        <h4>Рост розыска</h4><p>Повышается за преступления, стрельбу в людных местах и провал ограблений.</p>
+        <h4>Снижение</h4><p>Спрячьтесь, смените транспорт или переждите в убежище.</p>`
+    },
+    {
+      id: 'wiki-1', category: 'wiki', title: 'Блэкауты и электросеть',
+      snippet: 'Что происходит при отключении света, как это меняет локации и какие возможности открывает.',
+      content: `<p>Блэкаут — ключевая механика мира. При отключении света меняется поведение локаций.</p>
+        <h4>Эффекты</h4><p>Отключаются камеры и часть охранных систем, но появляются новые угрозы.</p>
+        <h4>Тактика</h4><p>Опытные команды планируют ограбления именно на время блэкаута.</p>`
+    },
+    {
+      id: 'corp-4', category: 'corp', title: 'HUGL DYNAMICS',
+      classified: true, clearance: 'LVL-5', file: 'CORP-004',
+      snippet: 'Профиль: [ЗАСЕКРЕЧЕНО]. Связи: коррупция в [ДАННЫЕ УДАЛЕНЫ].',
+      content: `<p>Профиль: <span class="red">&nbsp;теневой поставщик вооружения&nbsp;</span> под прикрытием логистической компании.</p>
+        <h4>Известные объекты</h4><p>Склады: <span class="red">&nbsp;███████████&nbsp;</span>. Порт: <span class="red">&nbsp;████&nbsp;</span>.</p>
+        <h4>Связи</h4><p>Коррупционные каналы в <span class="red">&nbsp;███&nbsp;</span> и <span class="red">&nbsp;████████&nbsp;</span>.</p>`
+    }
+  ];
+
+  // ================================================================
+  //  РЕНДЕР
+  // ================================================================
+  let activeCat = 'all';
+  let query = '';
+
+  const listEl = document.getElementById('list');
+  const detailEl = document.getElementById('detail');
+  const catsEl = document.getElementById('cats');
+  const searchEl = document.getElementById('search');
+
+  function countFor(catKey) {
+    return ENTRIES.filter(e => e.category === catKey).length;
+  }
+
+  function renderCats() {
+    let html = `<div class="cat ${activeCat==='all'?'on':''}" data-cat="all">Все записи <b>${ENTRIES.length}</b></div>`;
+    for (const key in CATEGORIES) {
+      const c = CATEGORIES[key];
+      const cnt = countFor(key) + (c.lock ? ' ⚿' : '');
+      html += `<div class="cat ${c.lock?'lock':''} ${activeCat===key?'on':''}" data-cat="${key}">${c.name} <b>${cnt}</b></div>`;
+    }
+    catsEl.innerHTML = html;
+    catsEl.querySelectorAll('.cat').forEach(el => {
+      el.addEventListener('click', () => { activeCat = el.dataset.cat; renderCats(); renderList(); });
+    });
+  }
+
+  function renderList() {
+    detailEl.classList.remove('show');
+    listEl.classList.remove('hide');
+
+    let items = ENTRIES.filter(e => activeCat === 'all' || e.category === activeCat);
+    if (query) {
+      const q = query.toLowerCase();
+      items = items.filter(e => (e.title + ' ' + e.snippet).toLowerCase().includes(q));
+    }
+
+    if (!items.length) { listEl.innerHTML = `<div class="empty">Ничего не найдено.</div>`; return; }
+
+    listEl.innerHTML = items.map(e => {
+      const isCorp = e.category === 'corp';
+      const tag = isCorp ? `FILE #${e.file || '—'} · ${e.clearance || ''}` : CATEGORIES[e.category].name;
+      return `<div class="art ${isCorp?'corp':''}" data-id="${e.id}">
+        <div class="tag">${tag}</div>
+        <h3>${e.title}</h3>
+        <p>${e.snippet}</p>
+      </div>`;
+    }).join('');
+
+    listEl.querySelectorAll('.art').forEach(el => {
+      el.addEventListener('click', () => openEntry(el.dataset.id));
+    });
+  }
+
+  function openEntry(id) {
+    const e = ENTRIES.find(x => x.id === id);
+    if (!e) return;
+    const isCorp = e.category === 'corp';
+
+    if (isCorp) {
+      detailEl.innerHTML = `
+        <div class="backlink" id="back">← Назад к базе</div>
+        <div class="article dossier">
+          <span class="stamp">CLASSIFIED</span>
+          <div class="cf">// FILE #${e.file || '—'} · CLEARANCE ${e.clearance || '—'}</div>
+          <h2>${e.title}</h2>
+          <div class="content">${e.content}</div>
+        </div>`;
+    } else {
+      detailEl.innerHTML = `
+        <div class="backlink" id="back">← Назад к базе</div>
+        <div class="article">
+          <div class="tag">${CATEGORIES[e.category].name}</div>
+          <h2>${e.title}</h2>
+          <div class="content">${e.content}</div>
+        </div>`;
+    }
+
+    listEl.classList.add('hide');
+    detailEl.classList.add('show');
+    detailEl.querySelector('#back').addEventListener('click', renderList);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  searchEl.addEventListener('input', () => { query = searchEl.value.trim(); renderList(); });
+
+  renderCats();
+  renderList();
+  </script>
+</body>
+</html>

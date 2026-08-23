@@ -1430,3 +1430,27 @@ html::after {
     color: #d9c48a; font-size: 12px; line-height: 1.5; border-radius: 10px;
     padding: 12px 14px; margin-bottom: 14px;
 }
+
+/* ==== Широкая раскладка вики: документ по центру во всю ширину, меню в левом поле ==== */
+#wiki-page .db-layout {
+    position: relative;
+    display: block;                 /* выходим из flex */
+    margin-left: -320px;            /* расширяем зону влево/вправо (симметрично → центр) */
+    margin-right: -320px;
+}
+#wiki-page .db-side {
+    position: absolute;             /* меню уезжает в левое поле, вне потока документа */
+    top: 0;
+    left: 0;
+    width: 190px;
+}
+#wiki-page .db-main {
+    max-width: 1100px;              /* широкий документ */
+    margin: 0 auto;                 /* по центру зоны */
+}
+/* На узких экранах — обычная колоночная раскладка, без выноса */
+@media (max-width: 1200px) {
+    #wiki-page .db-layout { margin-left: 0; margin-right: 0; display: flex; }
+    #wiki-page .db-side { position: static; width: 190px; }
+    #wiki-page .db-main { max-width: none; margin: 0; }
+}

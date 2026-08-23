@@ -1477,27 +1477,27 @@ html::after {
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
 }
-/* Плавные акцентные пятна внутри документа (документ неподвижен, играют только пятна) */
+/* Плавные акцентные пятна внутри документа (документ неподвижен, играют только пятна).
+   Без mix-blend-mode и без тайлинга — мягкие крупные пятна, чтобы не было «углов». */
 .db-article:not(.dossier)::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    mix-blend-mode: screen;
     background:
-        radial-gradient(circle at 20% 12%, rgba(238, 241, 244, 0.10), transparent 22%),
-        radial-gradient(circle at 82% 38%, rgba(238, 241, 244, 0.08), transparent 24%),
-        radial-gradient(circle at 45% 72%, rgba(238, 241, 244, 0.07), transparent 22%),
-        radial-gradient(circle at 70% 92%, rgba(238, 241, 244, 0.06), transparent 24%);
-    background-size: 720px 720px, 900px 900px, 820px 820px, 1000px 1000px;
-    animation: dbGlow 16s ease-in-out infinite;
+        radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.05),  transparent 42%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.045), transparent 44%),
+        radial-gradient(circle at 45% 82%, rgba(255, 255, 255, 0.04),  transparent 42%);
+    background-repeat: no-repeat;
+    background-size: 150% 55%, 170% 50%, 160% 60%;
+    animation: dbGlow 18s ease-in-out infinite;
 }
 /* Контент держим над слоем пятен */
 .db-article > * { position: relative; z-index: 1; }
 @keyframes dbGlow {
-    0%, 100% { background-position: 0 0, 0 0, 0 0, 0 0; }
-    50%      { background-position: 120px 220px, -170px 140px, 100px -150px, -120px -110px; }
+    0%, 100% { background-position: 0% 0%,   100% 40%, 40% 100%; }
+    50%      { background-position: 25% 18%, 72% 58%,  58% 78%; }
 }
 @media (prefers-reduced-motion: reduce) {
     .db-article:not(.dossier)::after { animation: none; }

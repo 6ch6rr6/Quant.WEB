@@ -1321,9 +1321,8 @@ html::after {
 .db-article { background: #16191e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 28px 30px; }
 .db-article .db-tag { font-size: 10px; letter-spacing: 2px; color: #8b93a0; text-transform: uppercase; margin-bottom: 12px; }
 .db-article h2 { font-family: 'Uncage', sans-serif; font-size: 26px; color: #fff; letter-spacing: 1px; margin-bottom: 18px; }
-.db-content { color: #c3cbd3; font-size: 14.5px; line-height: 1.75; }
-.db-content p { margin-bottom: 14px; }
-.db-content h4 { color: #fff; font-size: 15px; margin: 20px 0 8px; letter-spacing: 0.5px; }
+.db-content { color: #c3cbd3; font-size: 14.5px; line-height: 1.6; }
+.db-content p { margin-bottom: 9px; }
 
 /* Детальное досье (корпорации) */
 .db-article.dossier {
@@ -1397,14 +1396,17 @@ html::after {
 }
 
 /* ==== Оформление Markdown-контента статей ==== */
-.db-content h4 { color: #ffffff; font-size: 15px; margin: 20px 0 8px; letter-spacing: 0.5px; }
+/* Наименования блоков — акцентный янтарный, с крупным отступом сверху для отделения секций */
+.db-content h4 { color: #e3b866; font-size: 15px; margin: 34px 0 10px; letter-spacing: 0.5px; }
+/* Заголовок документа — крупный, белый */
 .db-content h4:first-child {
-    font-family: 'Uncage', sans-serif; font-size: 22px; letter-spacing: 1px; margin: 0 0 6px;
+    font-family: 'Uncage', sans-serif; font-size: 23px; letter-spacing: 1px;
+    color: #ffffff; margin: 0 0 10px;
 }
 .db-content blockquote {
-    border-left: 2px solid rgba(255, 255, 255, 0.18);
-    margin: 14px 0; padding: 8px 0 8px 16px;
-    color: #9aa4af; font-size: 13.5px; line-height: 1.7;
+    border-left: 2px solid rgba(227, 184, 102, 0.3);
+    margin: 12px 0 18px; padding: 6px 0 6px 16px;
+    color: #9aa4af; font-size: 13px; line-height: 1.5;
 }
 .db-content strong { color: #e7eaef; font-weight: 700; }
 .db-content em { color: #aab2bd; font-style: italic; }

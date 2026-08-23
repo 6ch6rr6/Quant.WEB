@@ -1454,3 +1454,51 @@ html::after {
     #wiki-page .db-side { position: static; width: 190px; }
     #wiki-page .db-main { max-width: none; margin: 0; }
 }
+
+/* ==== База под общий стиль сайта (как карточки на главной) ==== */
+.db-search {
+    background: rgba(15, 15, 20, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+}
+.db-art {
+    background: rgba(15, 15, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+.db-article {
+    position: relative;
+    overflow: hidden;
+    background: rgba(15, 15, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+/* Плавные акцентные пятна внутри документа (документ неподвижен, играют только пятна) */
+.db-article:not(.dossier)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    background:
+        radial-gradient(circle at 20% 12%, rgba(238, 241, 244, 0.10), transparent 22%),
+        radial-gradient(circle at 82% 38%, rgba(238, 241, 244, 0.08), transparent 24%),
+        radial-gradient(circle at 45% 72%, rgba(238, 241, 244, 0.07), transparent 22%),
+        radial-gradient(circle at 70% 92%, rgba(238, 241, 244, 0.06), transparent 24%);
+    background-size: 720px 720px, 900px 900px, 820px 820px, 1000px 1000px;
+    animation: dbGlow 16s ease-in-out infinite;
+}
+/* Контент держим над слоем пятен */
+.db-article > * { position: relative; z-index: 1; }
+@keyframes dbGlow {
+    0%, 100% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    50%      { background-position: 120px 220px, -170px 140px, 100px -150px, -120px -110px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .db-article:not(.dossier)::after { animation: none; }
+}

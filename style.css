@@ -20,6 +20,7 @@
     src: url('images/Bowler.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -27,6 +28,7 @@
     src: url('images/Goretax.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -34,6 +36,7 @@
     src: url('images/Supercharge.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 /* 2. НАСТРОЙКИ ФОНА, СЕТКИ И ПЕСКА */
@@ -71,6 +74,7 @@ html, body {
     box-sizing: border-box;
     font-family: 'Plus Jakarta Sans', sans-serif;
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -278,7 +282,7 @@ html {
 
 /* ==== МОБИЛЬНЫЙ НАВБАР: бургер + выпадающее меню ==== */
 @media (max-width: 768px) {
-    .nav-toggle { display: flex; }
+    .nav-toggle { display: flex; margin-left: 8px; }
 
     .nav-collapse {
         position: absolute;
@@ -339,7 +343,8 @@ html {
     .nav-links .tab-btn.active { background: rgba(255, 255, 255, 0.08); }
     .nav-links .tab-btn.active::after { display: none; }
 
-    .nav-links #lang-toggle-btn { margin-left: 0; align-self: flex-start; }
+    /* Язык остаётся видимым на баре, у правого края перед бургером */
+    #lang-toggle-btn { margin-left: auto; }
 
     /* Бургер превращается в крестик */
     .navbar.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -352,7 +357,7 @@ html {
    КНОПКА ЯЗЫКА (МИНИМАЛИСТИЧНЫЙ ТОГГЛ С ПРОЯВЛЕНИЕМ ТЕКСТА)
    ========================================================================== */
 
-.nav-links #lang-toggle-btn {
+#lang-toggle-btn {
     background-color: #141416;
     border: 1px solid rgba(255, 255, 255, 0.05);
     margin-left: 24px;
@@ -395,14 +400,14 @@ html {
 }
 
 /* Ховер на капсулу */
-.nav-links #lang-toggle-btn:hover {
+#lang-toggle-btn:hover {
     border-color: rgba(255, 255, 255, 0.12);
     transform: none !important;
 }
 
 /* СТИЛИ ДЛЯ НАДПИСЕЙ RU И EN (Мёртво стоят по краям) */
-.nav-links #lang-toggle-btn::before,
-.nav-links #lang-toggle-btn::after {
+#lang-toggle-btn::before,
+#lang-toggle-btn::after {
     font-family: 'Plus Jakarta Sans', sans-serif; 
     font-weight: 700;
     font-size: 10px !important;
@@ -415,7 +420,7 @@ html {
 }
 
 /* Буквы EN всегда слева */
-.nav-links #lang-toggle-btn::before {
+#lang-toggle-btn::before {
     content: "EN";
     left: 12px;
     color: #8a8a93;
@@ -423,7 +428,7 @@ html {
 }
 
 /* Буквы RU всегда справа */
-.nav-links #lang-toggle-btn::after {
+#lang-toggle-btn::after {
     content: "RU";
     right: 12px;
     color: #8a8a93;
@@ -431,7 +436,7 @@ html {
 }
 
 /* Свечение активного RU белым цветом при наведении */
-.nav-links #lang-toggle-btn:hover::after {
+#lang-toggle-btn:hover::after {
     color: #ffffff;
 }
 
@@ -440,21 +445,21 @@ html {
    ========================================================================== */
 
 /* Когда на кнопке активен класс .en (включен английский язык) */
-.nav-links #lang-toggle-btn.en {
+#lang-toggle-btn.en {
     background-image: url('images/flag-en.png');
     background-position: 44px center; /* Сдвигаем флаг вправо */
 }
 
 /* В режиме EN гасим текст RU и проявляем текст EN */
-.nav-links #lang-toggle-btn.en::after {
+#lang-toggle-btn.en::after {
     opacity: 0;
 }
-.nav-links #lang-toggle-btn.en::before {
+#lang-toggle-btn.en::before {
     opacity: 1;
 }
 
 /* Свечение активного EN белым цветом при наведении */
-.nav-links #lang-toggle-btn.en:hover::before {
+#lang-toggle-btn.en:hover::before {
     color: #ffffff;
 }
 
@@ -979,11 +984,12 @@ body {
 }
 .tab-content.active {
     display: block;
-    animation: tabFadeIn 0.4s ease;
+    animation: tabFadeIn 0.45s ease;
 }
+/* Чистое плавное появление без сдвига — не «дёргает» при переключении */
 @keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 /* Стили кнопок-вкладок в навигации */

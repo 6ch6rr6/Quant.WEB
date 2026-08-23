@@ -53,9 +53,6 @@
 <header class="navbar">
     <div class="logo">BLACKOUT</div>
 
-    <!-- Бургер (только на мобилке) -->
-    <button class="nav-toggle" id="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
-
     <div class="nav-collapse" id="nav-collapse">
         <a href="https://discord.gg/CZhffCMkxT" target="_blank" rel="noopener" class="nav-cta discord"><span data-en="Discord">Discord</span></a>
         <a href="https://www.roblox.com/games/18913136198/BLACKOUT-P-A" target="_blank" rel="noopener" class="nav-cta play"><span data-en="Play">Играть</span></a>
@@ -67,11 +64,14 @@
             <button class="tab-btn" data-tab="wiki-page"><span class="tab-tip" data-en="Wiki">Вики</span></button>
             <button class="tab-btn" data-tab="devs-page"><span class="tab-tip" data-en="Developers">Разработчики</span></button>
             <button class="tab-btn" data-tab="socials-page"><span class="tab-tip" data-en="Social Media">Соцсети</span></button>
-
-            <!-- Кнопка переключения языка -->
-            <button id="lang-toggle-btn" class="lang-btn">RU</button>
         </nav>
     </div>
+
+    <!-- Язык — всегда виден на баре -->
+    <button id="lang-toggle-btn" class="lang-btn">RU</button>
+
+    <!-- Бургер (только на мобилке) -->
+    <button class="nav-toggle" id="nav-toggle" aria-label="Меню"><span></span><span></span><span></span></button>
 </header>
 
 
@@ -713,7 +713,8 @@
                 targetBtn.classList.add("active");
                 targetContent.classList.add("active");
 
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                // Мгновенный скролл вверх — плавный конфликтовал с fade-анимацией вкладки
+                window.scrollTo(0, 0);
             }
         }
 
